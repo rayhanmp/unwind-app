@@ -1,15 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { useState } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+
 
 export default function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  SplashScreen.preventAutoHideAsync();
+  setTimeout(SplashScreen.hideAsync, 3000);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome To</Text>
-      <Text style={styles.subtitle}>Unwind</Text>
+      <Text style={styles.subtitle}>Unwind V2</Text>
       <TextInput 
         style={
           {height: 50, 
@@ -25,7 +29,7 @@ export default function App() {
         defaultValue={username}/>
             <TextInput 
         style={{
-          height: 50, 
+          height: 50,   
           borderRadius:10,
           padding:10,
           margin:10,

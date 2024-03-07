@@ -4,10 +4,10 @@
     "slug": "Unwind",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/placeholder.jpeg",
+    "icon": "./assets/placeholder.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/placeholder.jpeg",
+      "image": "./assets/placeholder.png",
       "resizeMode": "contain",
       "backgroundColor": "#9768CD"
     },
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.rayhanmp.Unwind"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ed783135-7835-4b43-9d8a-76a4358292ad"
+      }
     }
   }
 }
