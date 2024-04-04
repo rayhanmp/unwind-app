@@ -3,6 +3,7 @@
     "name": "Unwind",
     "slug": "Unwind",
     "version": "1.0.0",
+    "scheme" : "unwind",
     "orientation": "portrait",
     "icon": "./assets/placeholder.png",
     "userInterfaceStyle": "light",
@@ -19,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.rayhanmp.Unwind"
@@ -28,9 +29,10 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "eas": {
-        "projectId": "ed783135-7835-4b43-9d8a-76a4358292ad"
-      }
-    }
+      "eas": {}
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
