@@ -14,9 +14,9 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.title}>Welcome To</Text>
       <Text style={styles.subtitle}>Unwind V2</Text>
-      <TextInput 
+      <TextInput
         style={
-          {height: 50, 
+          {height: 50,
           borderRadius:10,
           padding:10,
           margin:10,
@@ -27,9 +27,9 @@ export default function App() {
         placeholder="Username"
         onChangeText={newUsername => setUsername(newUsername)}
         defaultValue={username}/>
-            <TextInput 
+            <TextInput
         style={{
-          height: 50,   
+          height: 50,
           borderRadius:10,
           padding:10,
           margin:10,
@@ -40,7 +40,7 @@ export default function App() {
         placeholder="Password"
         onChangeText={newPassword => setPassword(newPassword)}
         defaultValue={password}
-        secureTextEntry={true}/> 
+        secureTextEntry={true}/>
       <Button title="login"
       color='#9768CD'
       />
@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
   },
   title : {
     fontSize: 24,
-    color : '#9768CD', 
-  }, 
+    color : '#9768CD',
+  },
   subtitle : {
     fontSize: 36,
     color : '#9768CD',
-    fontWeight : 'bold', 
-    marginBottom : 30 
+    fontWeight : 'bold',
+    marginBottom : 30
   }
 });
