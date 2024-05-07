@@ -1,51 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
+import { Button } from 'react-native-paper';
+import { Link, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { Link } from 'expo-router';
+import intro1 from "../assets/Intro1.png"
 
 export default function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   SplashScreen.preventAutoHideAsync();
   setTimeout(SplashScreen.hideAsync, 3000);
+  const router = useRouter()
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome To</Text>
-      <Text style={styles.subtitle}>Unwind V2</Text>
-      <TextInput
-        style={
-          {height: 50,
-          borderRadius:10,
-          padding:10,
-          margin:10,
-          backgroundColor:'#e3dfe6',
-          width : 300,
-          fontSize:18
-        }}
-        placeholder="Username"
-        onChangeText={newUsername => setUsername(newUsername)}
-        defaultValue={username}/>
-            <TextInput
-        style={{
-          height: 50,
-          borderRadius:10,
-          padding:10,
-          margin:10,
-          backgroundColor:'#e3dfe6',
-          width : 300,
-          fontSize:18
-        }}
-        placeholder="Password"
-        onChangeText={newPassword => setPassword(newPassword)}
-        defaultValue={password}
-        secureTextEntry={true}/>
-      <Button title="login"
-      color='#9768CD'
-      />
-      <Link href="/home">HOME</Link>
-      <StatusBar style="auto" />
+      <Text> Header </Text>
+      <Text> Subtitle </Text>
+      <Image source={intro1} />
+      <Button mode="contained" onPress={()=>{router.push("/register")}}>
+        SIGN UP
+      </Button>
+      <Link href="/login">ALREADY HAVE AN ACCOUNT? LOG IN</Link>
     </View>
   );
 }
