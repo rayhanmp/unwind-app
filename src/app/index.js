@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import { useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
-
+import { Link } from 'expo-router';
 
 export default function App() {
   const [username, setUsername] = useState('');
@@ -44,6 +44,7 @@ export default function App() {
       <Button title="login"
       color='#9768CD'
       />
+      <Link href="/home">HOME</Link>
       <StatusBar style="auto" />
     </View>
   );
