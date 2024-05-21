@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { FlatList, View, StyleSheet} from 'react-native'; 
+import { FlatList, View, StyleSheet, Text} from 'react-native'; 
+import Navbar from './components/navbar';
 
 export default function Home(){
     return (<View style={styles.container}>
+    <Text>Home, Testing</Text>
+    <Navbar />
     </View>)
 }
 
