@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TextInput, Image} from 'react-native';
 import { Button } from 'react-native-paper';
 import { Link, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import intro1 from "../assets/Intro1.png"
+import intro1 from "../../assets/Intro1.png"
 
 export default function App() {
   SplashScreen.preventAutoHideAsync();
