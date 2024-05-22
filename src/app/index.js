@@ -3,6 +3,7 @@ import { Button } from 'react-native-paper';
 import { Link, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import intro1 from "../../assets/Intro1.png"
+import { Title } from 'react-native-paper';
 
 export default function App() {
   SplashScreen.preventAutoHideAsync();
@@ -11,10 +12,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text> Header </Text>
-      <Text> Subtitle </Text>
+      <Title style={styles.title}> Have a more {'\n'} productive break! </Title>
+      <Text> Unwind helps you take break that rewards and refresh you! </Text>
       <Image source={intro1} />
-      <Button mode="contained" onPress={()=>{router.push("/register")}}>
+      <Button style={styles.buttonWide} mode="contained" onPress={()=>{router.push("/register")}}>
         SIGN UP
       </Button>
       <Link href="/login">ALREADY HAVE AN ACCOUNT? LOG IN</Link>
@@ -35,7 +36,18 @@ const styles = StyleSheet.create({
   },
   title : {
     fontSize: 24,
-    color : '#9768CD',
+    color : '#2A1735',
+    fontWeight: '800',
+    fontSize: 30,
+    textAlign: 'center',
+  },
+  buttonWide: {
+    marginTop: 10,
+    width: 330,
+    borderRadius: 20,
+    padding: 3,
+    alignSelf: 'center',
+    backgroundColor: '#B28BEB',
   },
   subtitle : {
     fontSize: 36,
