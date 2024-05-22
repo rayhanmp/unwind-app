@@ -13,12 +13,12 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Title style={styles.title}> Have a more {'\n'} productive break! </Title>
-      <Text> Unwind helps you take break that rewards and refresh you! </Text>
-      <Image source={intro1} />
+      <Text style={styles.subtitle}> Unwind helps you take break that {'\n'}rewards and refresh you! </Text>
+      <Image source={intro1} style={{width: '100%', height: 408, borderRadius: 15}}/>
       <Button style={styles.buttonWide} mode="contained" onPress={()=>{router.push("/register")}}>
         SIGN UP
       </Button>
-      <Link href="/login">ALREADY HAVE AN ACCOUNT? LOG IN</Link>
+      <Link href="/login" style={{textAlign: 'center', marginTop: 15, color: '#BBB9B5', fontSize:14}}>ALREADY HAVE AN ACCOUNT? LOG IN</Link>
     </View>
   );
 }
@@ -29,6 +29,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F7F3',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: 50,
+    paddingHorizontal: 30,
   },
   logo : {
     height: 200,
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonWide: {
-    marginTop: 10,
+    marginTop: 40,
     width: 330,
     borderRadius: 20,
     padding: 3,
@@ -50,9 +52,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#B28BEB',
   },
   subtitle : {
-    fontSize: 36,
-    color : '#9768CD',
-    fontWeight : 'bold',
-    marginBottom : 30
+    fontSize: 16,
+    color : '#BBB9B5',
+    fontWeight : '500',
+    textAlign: 'center',
+    marginTop : 5,
+    marginBottom : 20,
+    
   }
 });
