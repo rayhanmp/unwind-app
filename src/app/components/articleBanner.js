@@ -3,16 +3,17 @@ import { View } from "react-native"
 
 export default function ArticleBanner(){
     images = [
-        {img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU'},
-        {img: 'https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg'},
-        {img: 'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg'}
-    ]
+        {img : require('../../../assets/banner_1.png')}, 
+        {img : require('../../../assets/banner_2.png')},
+      ]
     return (
         <ImageSlider
             data={images}
             autoPlay={false}
-            onItemChanged={(item) => console.log("item", item)}
             closeIconColor="#fff"
+            localImg
+            caroselImageContainerStyle={{height:280}}
+            activeIndicatorStyle={{backgroundColor:"#9768CD"}}
         />
     )
 }
