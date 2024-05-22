@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ScrollView, View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground} from 'react-native'; 
-import { Button } from 'react-native-paper';
+import { ScrollView, View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground, TextInput} from 'react-native'; 
+import { Button, Modal, Portal, PaperProvider } from 'react-native-paper';
 import Navbar from './components/navbar';
 import { Title } from 'react-native-paper';
 import premiumPromotion from "../../assets/premiumPromotion.png";
@@ -11,15 +11,33 @@ import walkingSessionRecord from "../../assets/walkingSessionRecord.png";
 import meditationSessionRecord from "../../assets/meditationSessionRecord.png";
 
 export default function Setting() {
+  const [visible, setVisible] = React.useState(false);
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+
   return (
     <View style={styles.container}>
+      <PaperProvider>
+        <Portal>
+          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
+            <Text style={styles.modalTitle}>Change Login Information</Text>
+            <TextInput placeholder="Username" style={styles.modalTextInput}></TextInput>
+            <TextInput placeholder="Old Password" style={styles.modalTextInput}></TextInput>
+            <TextInput placeholder="New Password" style={styles.modalTextInput}></TextInput>
+            <TextInput placeholder="Confirm New Password" style={styles.modalTextInput}></TextInput>
+            <Button style={styles.buttonWideRegular} mode="contained" onPress={hideModal}>CONFIRM</Button>
+            <Button style={styles.buttonWideOutlineRegular} mode="contained" onPress={hideModal}><Text style={{color: '#B28BEB'}}>CANCEL</Text></Button>
+          </Modal>
+        </Portal>
+
       <View style={styles.header}>
         <Title style={styles.title}>Profile & Settings</Title>
       </View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.section}>
           <Text style={styles.h2}>Login Information</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={showModal}>
             <Image source={editIcon} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
@@ -68,12 +86,13 @@ export default function Setting() {
         <View style={styles.dangerContainer}>
           <Text style={styles.h2Red}>Danger Zone</Text></View>
         <View style={styles.dangerContent}>
-        <Button style={styles.buttonWide} mode="contained" onPress={() => console.log("clicked")}>LOGOUT</Button> 
-        <Button style={styles.buttonWideOutline} mode="contained" onPress={() => console.log("clicked")}><Text style={{color:'#D75D5D'}}>DELETE ACCOUNT</Text></Button> 
+        <Button style={styles.buttonWideDanger} mode="contained" onPress={() => console.log("clicked")}>LOGOUT</Button> 
+        <Button style={styles.buttonWideOutlineDanger} mode="contained" onPress={() => console.log("clicked")}><Text style={{color:'#D75D5D'}}>DELETE ACCOUNT</Text></Button> 
 
           </View>
       </ScrollView>
       <Navbar style={styles.navbar} />
+      </PaperProvider>
     </View>
   );
 }
@@ -198,14 +217,14 @@ const styles = StyleSheet.create({
     borderColor: '#BBB9B5',
     borderWidth: 2,
   },
-    buttonWide: {
+    buttonWideDanger: {
     width: 330,
     borderRadius: 20,
     padding: 3,
     alignSelf: 'center',
     backgroundColor: '#D75D5D',
   },
-  buttonWideOutline: {
+  buttonWideOutlineDanger: {
     marginTop: 10,
     width: 330,
     borderRadius: 20,
@@ -215,5 +234,43 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     backgroundColor: '#F8F7F3',
     color: '#000',
+  },
+  buttonWideRegular: {
+    width: '100%',
+    borderRadius: 20,
+    padding: 3,
+    alignSelf: 'center',
+    backgroundColor: '#B28BEB',
+    marginTop: 15,
+  },
+  buttonWideOutlineRegular: {
+    marginTop: 10,
+    width: '100%',
+    borderRadius: 20,
+    padding: 3,
+    alignSelf: 'center',
+    borderColor: '#B28BEB',
+    borderWidth: 3,
+    backgroundColor: '#F8F7F3',
+    color: '#000',
+  },
+  modal: {
+    backgroundColor: '#F8F7F3',
+    padding: 20,
+    margin: 20,
+    borderRadius: 15,
+  },
+  modalTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  modalTextInput: {
+    backgroundColor: '#F1EDDF',
+    padding: 10,
+    paddingLeft: 15,
+    margin: 5,
+    borderRadius: 10,
   },
 });
