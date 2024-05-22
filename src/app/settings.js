@@ -69,7 +69,7 @@ export default function Setting() {
           <Text style={styles.h2Red}>Danger Zone</Text></View>
         <View style={styles.dangerContent}>
         <Button style={styles.buttonWide} mode="contained" onPress={() => console.log("clicked")}>LOGOUT</Button> 
-        <Button style={styles.buttonWideOutline} mode="contained" onPress={() => console.log("clicked")}>DELETE ACCOUNT</Button> 
+        <Button style={styles.buttonWideOutline} mode="contained" onPress={() => console.log("clicked")}><Text style={{color:'#D75D5D'}}>DELETE ACCOUNT</Text></Button> 
 
           </View>
       </ScrollView>
@@ -88,8 +88,9 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    height: 75,
-    top:25,
+    height: 100,
+    paddingTop: 25,
+    top:0,
     position: 'absolute',
     zIndex: 1,
     backgroundColor: '#F8F7F3',
@@ -143,6 +144,7 @@ const styles = StyleSheet.create({
   },
   premiumPromotion: {
     margin: 20,
+    marginTop: 0,
     borderRadius: 15,
     backgroundColor: '#F1EDDF',
   },
@@ -160,6 +162,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   recordContainer: {
+    marginTop: -20,
     padding: 20,
   },
   recordButtonContainer: {
@@ -184,6 +187,7 @@ const styles = StyleSheet.create({
   },
   dangerContainer: {
     padding: 20,
+    marginTop: -20,
   },
   dangerContent: {
     padding: 20,
