@@ -9,6 +9,7 @@ import workSessionRecord from "../../assets/workSessionRecord.png";
 import wordWrittenJournalRecord from "../../assets/wordWrittenJournalRecord.png";
 import walkingSessionRecord from "../../assets/walkingSessionRecord.png";
 import meditationSessionRecord from "../../assets/meditationSessionRecord.png";
+import Appstyles from './components/Appstyles';
 
 export default function Setting() {
   const [visible, setVisible] = React.useState(false);
@@ -91,7 +92,7 @@ export default function Setting() {
 
           </View>
       </ScrollView>
-      <Navbar style={styles.navbar} />
+      <Navbar style={Appstyles.navbar} />
       </PaperProvider>
     </View>
   );
@@ -198,11 +199,6 @@ const styles = StyleSheet.create({
   },
   recordText: {
     marginTop: -5,
-  },
-  navbar: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
   },
   dangerContainer: {
     padding: 20,
