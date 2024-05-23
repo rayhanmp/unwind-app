@@ -14,13 +14,18 @@ export default function Article(){
     }
 
     return (
+      <View style={styles.container}>
       <PaperProvider>
-        <ScrollView style={styles.container}>
-        <ArticleBanner />
-        { renderCard(5) }
-      </ScrollView>
-      <Navbar />
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <ArticleBanner />
+          <View style={styles.articleContainer}>
+            <Text style={{color:"#BBB9B5", fontSize:18, fontWeight:"bold"}}>Learn More!</Text>
+            { renderCard(5) }
+          </View>
+        </ScrollView>
+        <Navbar/>
       </PaperProvider>
+      </View>
       )
 }
 
@@ -28,6 +33,11 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#F1EDDF',
-      // paddingTop: 10
-    }
+    },
+    articleContainer: {
+      paddingHorizontal: 20
+    },
+    scrollViewContent: {
+      paddingBottom: 120, // Ensure there is some padding at the bottom to make the scrolling smoother
+    },
   });

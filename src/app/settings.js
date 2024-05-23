@@ -199,11 +199,6 @@ const styles = StyleSheet.create({
   recordText: {
     marginTop: -5,
   },
-  navbar: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-  },
   dangerContainer: {
     padding: 20,
     marginTop: -20,
