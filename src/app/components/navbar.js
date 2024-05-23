@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         flexDirection: 'column',
+        zIndex:1000
     },
     navbar: {
         alignSelf: 'center',
