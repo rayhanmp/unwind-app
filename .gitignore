@@ -40,3 +40,6 @@ firebaseConfig.js
 # IDEs
 .idea/
 .vscode/
+
+#firebase
+firebaseConfig.js

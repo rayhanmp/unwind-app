@@ -6,8 +6,10 @@ import femaleTutorButton from '../../assets/femaleTutorButton.png';
 import maleTutorButton from '../../assets/maleTutorButton.png';
 import ambianceButton from '../../assets/ambianceButton.png';
 import silenceButton from '../../assets/silenceButton.png';
+import { useRouter } from "expo-router";
 
 const BasicMeditationScreen = () => {
+  const router = useRouter();
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Image source={meditationBanner} style={styles.banner} /> 
@@ -34,7 +36,7 @@ const BasicMeditationScreen = () => {
               <Image source={ambianceButton} style={styles.button} />
             </TouchableOpacity>
           </View>
-          <Button style={styles.buttonWide} mode="contained" onPress={() => console.log("clicked")}>START</Button> 
+          <Button style={styles.buttonWide} mode="contained" onPress={() => {router.push("/meditationAudio")}}>START</Button> 
         </Card.Content>
       </Card>
     </ScrollView>
