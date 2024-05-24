@@ -3,7 +3,7 @@
     "name": "Unwind",
     "slug": "Unwind",
     "version": "1.0.0",
-    "scheme" : "unwind",
+    "scheme": "unwind",
     "orientation": "portrait",
     "icon": "./assets/placeholder.png",
     "userInterfaceStyle": "light",
@@ -32,7 +32,8 @@
       "eas": {}
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-asset"
     ]
   }
 }

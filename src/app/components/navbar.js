@@ -13,7 +13,9 @@ export default function Navbar(){
     return (
         <View style={styles.container}>
             <View style={styles.centerButton}>
-                <TouchableOpacity onPress={() => console.log("clicked")}>
+                <TouchableOpacity
+                    onPress={() => {router.push("/timerSetup")}}
+                >
                     <Image
                     source={navbarCenter}
                     >
