@@ -3,16 +3,7 @@ import { FlatList, View, StyleSheet, Text, Image, ScrollView} from 'react-native
 import Navbar from './components/navbar';
 import { PaperProvider, Divider, Button } from 'react-native-paper';
 import journal from '../../assets/Journal.png'
-import { addDoc, collection } from 'firebase/firestore';
-import { FIREBASE_DB } from '../../firebaseConfig';
-
 export default function PastJournal(){
-  const testingFirebase = async () => {
-    console.log("Firebase tested")
-
-    const doc = addDoc(collection(FIREBASE_DB, 'test'), {title : "I am a test", done: true});
-  }
-
   return (<View style={styles.container}>
       <PaperProvider>
         <View style={styles.journalHeader}>
