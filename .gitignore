@@ -34,6 +34,9 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+#firebase
+firebaseConfig.js
+
 # IDEs
 .idea/
 .vscode/
