@@ -17,7 +17,7 @@ export default function JournalCard({isFirst}){
                 </View>
             </View>
             }
-            <Card mode="contained" style={{width:'85%', alignSelf:'center', backgroundColor:"#F8F7F3"}} onPress={() => router.push("/articleDetail")} contentStyle={{color:"black"}}>
+            <Card mode="contained" style={{width:'85%', alignSelf:'center', backgroundColor:"#F8F7F3"}} onPress={() => router.push("/journalDetail")} contentStyle={{color:"black"}}>
                     <Card.Content>
                     <   Text variant="titleMedium" style={{color:"#9768CD", fontSize:18}}>UI/UX adventures</Text>
                         <Text variant="bodySmall" style={{color:"#2A1735", fontSize:13}}>Today i did a lot, I managed to finish my tasks for the UI/UX design they assigned me and honestly I’m quite proud of it. </Text>
