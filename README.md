@@ -25,7 +25,7 @@
 </p>
 
 <p align="center">
-      <img src="./assets/readme_banner.png" style="width: 50%"></td>
+      <img src="./assets/readme_banner.png" style="width: 80%"></td>
 </p>
 
 # Unwind
