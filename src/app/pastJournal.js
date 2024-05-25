@@ -3,21 +3,21 @@ import { FlatList, View, StyleSheet, Text, Image, ScrollView} from 'react-native
 import Navbar from './components/navbar';
 import { PaperProvider, Divider } from 'react-native-paper';
 import journal from '../../assets/Journal.png'
+import JournalCard from './components/journalCard';
 
 export default function PastJournal(){
     return (<View style={styles.container}>
       <PaperProvider>
         <View style={styles.journalHeader}>
-            <Image source={journal} style={{width:60, height: 83, marginBottom: 20}}></Image>
+            <Image source={journal} style={{width:50, height:68, marginBottom: 20}}></Image>
             <Text style={styles.pastJournalTitle}>Journal Entries</Text>
         </View>
-        <ScrollView>
-          <Divider style={styles.divider} />
-          <View>
-            <Text>
-              Hellow
-            </Text>
-          </View>
+        <Divider style={styles.divider} />
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+            <JournalCard isFirst={true}/>
+            <JournalCard isFirst={false}/>
+            <JournalCard isFirst={true}/>
+            <JournalCard isFirst={false}/>
         </ScrollView>
         <Navbar />
       </PaperProvider>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     journalHeader : {
       alignItems: "center",
       justifyContent: "flex-end",
-      height:200,
+      height:"20%",
       marginTop : 50,
       borderColor: "gray",
     },
@@ -42,8 +42,12 @@ const styles = StyleSheet.create({
       color: '#2A1735'
     },
     divider: {
-      marginTop: 35,
+      marginTop: 25,
       backgroundColor: '#BBB9B5',
-      height: 2,
-    }
+      height: 1,
+    },
+    scrollViewContent: {
+      paddingBottom: 120, // Ensure there is some padding at the bottom to make the scrolling smoother
+      padding: 20,
+    },
   });

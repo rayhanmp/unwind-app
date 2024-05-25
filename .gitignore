@@ -37,3 +37,5 @@ yarn-error.*
 # IDEs
 .idea/
 .vscode/
+
+firebaseConfig.js
