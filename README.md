@@ -32,19 +32,30 @@
 A mobile application for journaling and productivity.
 
 ## Table of Contents
-- [What is Unwind](#whatisunwind)
+- [Introduction](#intro)
+- [Features](#features)
 - [How do I use it?](#howtouse)
+- [Tech stack](#techstack)
 - [Contributors](#contributors)
-## What is Unwind?
-<a name="whatisunwind"></a>
-The world is moving at an increasingly fast pace - it is easy for people, especially youth, to feel overwhelmed.
+- [License](#license)
+  
+## Introduction
+<a name="intro"></a>
+In today's fast-paced world, it's easy to feel **overwhelmed and stressed**. Unwind is a mobile app designed to help you prioritize your mental well-being and find balance in your life. 
 
-An imbalanced lifestyle, poor attention towards mental wellness, and the rising demand for young people. It’s easy to fall into a vicious cycle of fatigue.
-Unwind provides a **safe online platform for users to unwind** after a long day at school or work, through features like mood tracking, courses, journaling and meditation.
+With features like work timer, journaling, articles, and meditations, Unwind offers a safe and supportive space to relax, reflect, and recharge.
+
+## Features
+<a name="features"></a>
+* **Work Timer:** Setup a work timer to help you focus and track your productivity.
+* **Journaling:**  Capture your thoughts and feelings in a private journal to gain clarity and perspective.
+* **Articles:**  Access a library of curated articles on topics like stress management, mindfulness, and productivity.
+* **Meditations:** Practice mindfulness and reduce stress with  meditation sessions.
 
 ## How do I use it?
 <a name="howtouse"></a>
-As of right now, we have not published the application to any major application store. However, you can build your own version by using Expo. There are some prequisites however, you must have [NodeJS](https://nodejs.org/en) installed beforehand. If you already have it, here's how you can build your own Unwind application.
+Currently, Unwind is in alpha development and not yet available on app stores. However, you can build and run the app locally using Expo.
+There are some prequisites however, ensure you have [Node.js](https://nodejs.org/en) and npm installed on your system. If you already have it, here's how you can build your own Unwind application.
 
 Clone this repository by using this command:
 
@@ -54,7 +65,7 @@ Go to the repository location:
 
     % cd unwind-app
 
-Install all the required packages:
+Install all the dependencies:
 
     % npm install
 
@@ -62,17 +73,18 @@ Make sure you already have an Expo account, then build the project using EAS:
 
     % eas build --profile development --platform android
 
-After the build is done, the CLI will ask you to install the application in your Android emulator. Alternatively, you can also download the .apk through their site. If you choose to run it using Android emulator, then boot up the emulated device, then run:
+After the build is done, download the .apk through their site and install it on your device. Alternatively, you can follow the on-screen instructions to open the app in an emulator by typing:
 
     % npm expo
 
-Press `a` to open it in the emulator. Done.
+Then press `a` to open it in the emulator. Done.
 
-## Tech Stack
-- React Native
-- Expo
-- Firebase
-- React Native Paper
+## Tech stack
+<a name="techstack"></a>
+- **React Native**: The core framework for building the app.
+- **Expo**: Simplifies the development and deployment process.
+- **Firebase**: Handles authentication, database storage, and cloud functions.
+- **React Native Paper**: Provides a consistent and customizable UI component library.
 
 ## Contributors
 <a name="contributors"></a>
@@ -81,4 +93,5 @@ Press `a` to open it in the emulator. Done.
 | [Aulia Nadhirah Y. B.](https://github.com/Aulianyb) | [Kinanti W. Asih](https://github.com/KinantiWening1) | [Rayhan M. Pramanda](https://github.com/rayhanmp) |
 
 ## License
-This project is licensed under the GNU General Public License version 3 (GPLv3).
+<a name="license"></a>
+This project is licensed under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0) (GPLv3).
