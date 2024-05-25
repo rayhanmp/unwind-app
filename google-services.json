@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "440648493908",
+    "project_id": "unwind-ppam",
+    "storage_bucket": "unwind-ppam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440648493908:android:d168d5f73e4d133d2876c1",
+        "android_client_info": {
+          "package_name": "com.AuRA.Unwind"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-uRh8wK58zp7I7jPWdNwyp8hlawqCESY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440648493908:android:c2e12351e24335e12876c1",
+        "android_client_info": {
+          "package_name": "com.rayhanmp.Unwind"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-uRh8wK58zp7I7jPWdNwyp8hlawqCESY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
