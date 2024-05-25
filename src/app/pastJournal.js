@@ -14,6 +14,7 @@ export default function PastJournal(){
         </View>
         <Divider style={styles.divider} />
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
+            <Text style={{fontSize:20, fontWeight:"bold", color: '#BBB9B5',marginBottom: 10}}>OCTOBER 2023</Text>
             <JournalCard isFirst={true}/>
             <JournalCard isFirst={false}/>
             <JournalCard isFirst={true}/>

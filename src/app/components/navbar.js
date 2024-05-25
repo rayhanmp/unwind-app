@@ -119,5 +119,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 25,
         elevation: 40,
+        shadowOffset: {width: 0, height: -10}
     }
   });
