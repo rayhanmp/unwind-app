@@ -1,5 +1,19 @@
 <p align="center">
-<img src="./assets/unwindLogo.svg" alt="Unwind Logo" width="600" height="200">
+    <picture>
+      <source media="(prefers-color-scheme: dark)"
+          srcset="./assets/unwindLogo-Light"
+          width="600"
+          height="200"
+      />
+      <source media="(prefers-color-scheme: light)"
+          srcset="./assets/unwindLogo-Dark.svg"
+          width="600"
+          height="200"
+      />
+      <img id="logo" alt="Unwind logo"
+          src="./assets/unwindLogo-Dark.svg"
+      />
+    </picture>
 </p>
 
 <p align="center">
