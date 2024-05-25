@@ -1,7 +1,7 @@
 <p align="center">
     <picture>
       <source media="(prefers-color-scheme: dark)"
-          srcset="./assets/unwindLogo-Light"
+          srcset="./assets/unwindLogo-Light.svg"
           width="600"
           height="200"
       />
