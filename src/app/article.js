@@ -5,7 +5,6 @@ import ArticleCard from './components/articleCard';
 import ArticleBanner from './components/articleBanner';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PaperProvider } from 'react-native-paper';
-import Appstyles from './components/Appstyles';
 
 export default function Article(){
     const renderCard = (amount) => {
