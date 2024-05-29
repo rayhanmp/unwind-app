@@ -81,7 +81,8 @@ const TimerSetupScreen = () => {
       >
         <Text style={styles.startButtonText}>LET'S START!</Text>
       </Pressable>
-      <Pressable style={styles.cancelButton}>
+      <Pressable style={styles.cancelButton}
+      onPress={() => navigation.navigate('history')}>
         <Text style={styles.cancelButtonText}>CANCEL</Text>
       </Pressable>
     </View>

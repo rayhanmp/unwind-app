@@ -19,6 +19,7 @@ export default function Home(){
     Go to Reflection (Meditation)</Button>
     <Button onPress={() => router.push({ pathname: "/doneActivity", params: { activity: 'journaling', user: 'Gojo' } })}>
     Go to Reflection (Journaling)</Button>
+    <Button onPress={() => router.push("/history")}>Go to History</Button>
     <Navbar />
     </View>
     )
