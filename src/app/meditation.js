@@ -7,9 +7,10 @@ import maleTutorButton from '../../assets/maleTutorButton.png';
 import ambianceButton from '../../assets/ambianceButton.png';
 import silenceButton from '../../assets/silenceButton.png';
 import { useRouter } from "expo-router";
+import { useNavigation } from '@react-navigation/native';
 
 const BasicMeditationScreen = () => {
-  const router = useRouter();
+  const navigation = useNavigation();
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Image source={meditationBanner} style={styles.banner} /> 
@@ -36,7 +37,13 @@ const BasicMeditationScreen = () => {
               <Image source={ambianceButton} style={styles.button} />
             </TouchableOpacity>
           </View>
-          <Button style={styles.buttonWide} mode="contained" onPress={() => {router.push("/meditationAudio")}}>START</Button> 
+          <Button
+            style={styles.buttonWide}
+            mode="contained"
+            onPress={() => navigation.navigate('meditationAudio', { breakTime: 300 })}
+          >
+            START
+          </Button>
         </Card.Content>
       </Card>
     </ScrollView>
@@ -69,14 +76,12 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 15,
     fontWeight: 'bold',
+    fontSize: 28
   },
   minute: {
     fontWeight: 'bold',
   },
   description: {
-    textShadowColor: 'rgba(0, 0, 0, 0.15)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 3,
     fontSize: 15,
     marginTop: 10,
   },
