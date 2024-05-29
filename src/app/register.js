@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 import { useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
@@ -33,7 +33,7 @@ export default function Register() {
     <KeyboardAvoidingView
     style={styles.container}
     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Image source={registerBanner} style={styles.logo}/>
       <View style={styles.contentContainer}>
       <Text style={styles.title}>Hello!</Text>
@@ -59,7 +59,7 @@ export default function Register() {
       <Link href="/login" style={{textAlign: 'center', marginTop: 40, color: '#BBB9B5', fontSize:14}}>ALREADY HAVE AN ACCOUNT? LOG IN</Link>
       <StatusBar style="auto" />
       </View>
-    </View>
+    </ScrollView>
     </KeyboardAvoidingView>
   );
 }

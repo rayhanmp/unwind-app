@@ -18,6 +18,7 @@ export default function Navbar(){
                 >
                     <Image
                     source={navbarCenter}
+                    style={{width:21, height:18}}
                     >
                     </Image>
                 </TouchableOpacity>
@@ -25,7 +26,7 @@ export default function Navbar(){
             <View style={styles.navbar}>
                     <View>
                         <TouchableOpacity
-                            onPress={() => {router.push("/calendar")}}
+                            onPress={() => {router.push("/history")}}
                         >
                             <Image
                                 style={{  width: 28, height: 27 }}
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
         borderRadius: 35,
         zIndex: 10,
         borderColor: '#F1EDDF',
-        borderWidth: 5,
+
         justifyContent:'center',
         alignItems:'center'
     },
@@ -119,6 +120,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 25,
         elevation: 40,
-        shadowOffset: {width: 0, height: -10}
+        shadowOffset: { width: 0, height: -10 }, // Negative height to offset upwards
+        shadowOpacity: 0.05, // You can adjust the shadow opacity
+        shadowRadius: 5, // You can adjust the shadow radius
     }
   });
