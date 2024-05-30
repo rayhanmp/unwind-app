@@ -58,7 +58,7 @@ const HistoryScreen = () => {
     querySnapshot.forEach((doc) => {
       newActivities.push(doc.data());
     });
-    console.log(`Fetched activities for ${selectedDate}:`, newActivities); // Add logging
+    console.log(`Fetched activities for ${selectedDate}:`, newActivities);
     setActivities(newActivities);
   };
 
@@ -184,7 +184,7 @@ const HistoryScreen = () => {
                     </View>
                     <View style={styles.activityContainer}>
                       <Text style={styles.cardTime}>
-                        {addMinutesToTime(activity.date.toDate(), activity.workDuration + activity.breakDuration)}
+                        {addMinutesToTime(activity.date.toDate(), parseInt(activity.workDuration,10) + parseInt(activity.breakDuration,10))}
                       </Text>
                       <Image source={BreakIllustration} style={styles.illustration} />
                       <Text style={styles.activityText}>
