@@ -58,7 +58,7 @@ const HistoryScreen = () => {
     querySnapshot.forEach((doc) => {
       newActivities.push(doc.data());
     });
-    console.log(`Fetched activities for ${selectedDate}:`, newActivities); // Add logging
+    console.log(`Fetched activities for ${selectedDate}:`, newActivities);
     setActivities(newActivities);
   };
 
