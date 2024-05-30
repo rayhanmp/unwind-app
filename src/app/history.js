@@ -3,47 +3,63 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Button } f
 import { Calendar } from 'react-native-calendars';
 import Navbar from './components/navbar';
 import { useRouter } from "expo-router";
+import { FIREBASE_DB } from '../../firebaseConfig';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 // Import illustrations
 import DefaultIllustration from '../../assets/noActivity.png';
-import ActivityIllustration from '../../assets/worked.png';
 import WorkIllustration from '../../assets/worked.png';
 import BreakIllustration from '../../assets/breaked.png';
 import JournalIllustration from '../../assets/journaled.png';
-import VictoryIllustration from '../../assets/worked.png';
-
-const mockMarkedDates = {
-  '2024-05-23': { marked: true, dotColor: '#7D4DB4' },
-  '2024-05-24': { marked: true, dotColor: '#7D4DB4' },
-};
-
-const mockActivities = {
-  '2024-05-23': [
-    { time: '12:00', type: 'work', description: 'Worked for 50 minutes' },
-    { time: '12:50', type: 'break', description: 'Took a 20 minute break' },
-    { time: '13:10', type: 'journal', description: 'Wrote 165 words in your journal! Amazing!' },
-    { time: '14:00', type: 'victory', description: 'Finished Application Architecture Assignment and took my cat to the vet' },
-  ],
-  '2024-05-24': [
-    { time: '12:00', type: 'work', description: 'Worked for 50 minutes' },
-    { time: '12:50', type: 'break', description: 'Took a 20 minute break' },
-    { time: '13:10', type: 'journal', description: 'Wrote 165 words in your journal! Amazing!' },
-  ],
-};
+import MeditationIllustration from '../../assets/meditated.png';
+import WalkingIllustration from '../../assets/walked.png';
 
 const HistoryScreen = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [activities, setActivities] = useState([]);
-  const [markedDates, setMarkedDates] = useState(mockMarkedDates);
+  const [markedDates, setMarkedDates] = useState({});
   const [month, setMonth] = useState(new Date().toISOString().slice(0, 7));
+
+  useEffect(() => {
+    fetchMarkedDates();
+  }, [month]);
 
   useEffect(() => {
     fetchActivities();
   }, [selectedDate]);
 
-  const fetchActivities = () => {
+  const fetchMarkedDates = async () => {
+    const startOfMonth = new Date(`${month}-01`);
+    const endOfMonth = new Date(`${month}-31`);
+    const q = query(collection(FIREBASE_DB, 'workSession'), where('date', '>=', startOfMonth), where('date', '<=', endOfMonth));
+    const querySnapshot = await getDocs(q);
+    const newMarkedDates = {};
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const dateStr = data.date.toDate().toISOString().slice(0, 10);
+      newMarkedDates[dateStr] = { marked: true, dotColor: '#7D4DB4' };
+    });
+    setMarkedDates(newMarkedDates);
+  };
+
+  const fetchActivities = async () => {
     if (!selectedDate) return;
-    setActivities(mockActivities[selectedDate] || []);
+    const selectedDateStart = new Date(selectedDate);
+    selectedDateStart.setHours(0, 0, 0, 0);
+    const selectedDateEnd = new Date(selectedDate);
+    selectedDateEnd.setHours(23, 59, 59, 999);
+    const q = query(
+      collection(FIREBASE_DB, 'workSession'),
+      where('date', '>=', selectedDateStart),
+      where('date', '<=', selectedDateEnd)
+    );
+    const querySnapshot = await getDocs(q);
+    const newActivities = [];
+    querySnapshot.forEach((doc) => {
+      newActivities.push(doc.data());
+    });
+    console.log(`Fetched activities for ${selectedDate}:`, newActivities); // Add logging
+    setActivities(newActivities);
   };
 
   const handleDayPress = (day) => {
@@ -104,7 +120,26 @@ const HistoryScreen = () => {
       return date.toLocaleDateString('en-US', options);
     };
 
-    if (activities.length === 0) {
+    const addMinutesToTime = (date, minutes) => {
+      console.log(`Original date: ${date}`);
+      let newDate = new Date(date);
+      newDate.setMinutes(newDate.getMinutes() + minutes);
+      console.log(`New date after adding ${minutes} minutes: ${newDate}`);
+      return newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    };
+
+    // Group activities by date
+    const groupedActivities = activities.reduce((acc, activity) => {
+      const dateStr = activity.date.toDate().toISOString().slice(0, 10);
+      if (!acc[dateStr]) {
+        acc[dateStr] = [];
+      }
+      acc[dateStr].push(activity);
+      return acc;
+    }, {});
+
+    // Handle the case where there are no activities
+    if (selectedDate && !groupedActivities[selectedDate]) {
       return (
         <View style={styles.card}>
           <View style={styles.cardHeader}>
@@ -118,41 +153,107 @@ const HistoryScreen = () => {
         </View>
       );
     }
-    
-    return (
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Text style={styles.cardHeaderText}>{formatDate(selectedDate)}</Text>
-        </View>
-        <View style={styles.cardBody}>
-          <View style={styles.lineContainer}>
-            <View style={[styles.verticalLine, { height: activities.length * 80 }]} />
+
+    return Object.keys(groupedActivities).map((dateStr, index) => {
+      const dateActivities = groupedActivities[dateStr];
+      const lineHeight = dateActivities.length * 360; // Adjust the multiplier based on your design
+
+      return (
+        <View key={index} style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardHeaderText}>{formatDate(dateStr)}</Text>
+          </View>
+          <View style={styles.cardBody}>
+            <View style={styles.lineContainer}>
+              <View style={[styles.verticalLine, { height: lineHeight }]} />
               <View>
-                {activities.map((activity, index) => (
-                  <View key={index} style={styles.activityContainer}>
-                    <Text style={styles.cardTime}>{activity.time}</Text>
-                    <Image
-                      source={
-                        activity.type === 'work'
-                        ? WorkIllustration
-                        : activity.type === 'break'
-                        ? BreakIllustration
-                        : activity.type === 'journal'
-                        ? JournalIllustration
-                        : activity.type === 'victory'
-                        ? VictoryIllustration
-                        : ActivityIllustration
-                      }
-                      style={styles.illustration}
-                      />
-                    <Text style={styles.activityText}>{activity.description}</Text>
+                {dateActivities.map((activity, idx) => (
+                  <View key={idx}>
+                    <View style={styles.activityContainer}>
+                      <Text style={styles.cardTime}>
+                        {new Date(activity.date.toDate()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </Text>
+                      <Image source={WorkIllustration} style={styles.illustration} />
+                      <Text style={styles.activityText}>
+                        Worked for {activity.workDuration} minutes
+                      </Text>
+                    </View>
+                    <View style={styles.victoryContainer}>
+                      <Text style={styles.victoryTitle}>Your Victories 🎉</Text>
+                      <Text style={styles.victoryText}>{activity.reflection}</Text>
+                    </View>
+                    <View style={styles.activityContainer}>
+                      <Text style={styles.cardTime}>
+                        {addMinutesToTime(activity.date.toDate(), activity.workDuration + activity.breakDuration)}
+                      </Text>
+                      <Image source={BreakIllustration} style={styles.illustration} />
+                      <Text style={styles.activityText}>
+                        Took a {activity.breakDuration} minute break
+                      </Text>
+                    </View>
+                    <View style={styles.activityContainer}>
+                      {renderActivityDetails(activity)}
+                    </View>
                   </View>
-                  ))}
-                </View>
+                ))}
               </View>
             </View>
           </View>
-    );
+        </View>
+      );
+    });
+  };
+
+  const renderActivityDetails = (activity) => {
+    const workDuration = parseInt(activity.workDuration, 10);
+    const breakDuration = parseInt(activity.breakDuration, 10);
+
+    const addMinutesToTime = (date, minutes) => {
+      let newDate = new Date(date);
+      newDate.setMinutes(newDate.getMinutes() + minutes);
+      return newDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    };
+
+    switch (activity.activityType) {
+      case 'journaling':
+        return (
+          <>
+            <Text style={styles.cardTime}>
+              {addMinutesToTime(activity.date.toDate(), workDuration + breakDuration)}
+            </Text>
+            <Image source={JournalIllustration} style={styles.illustration} />
+            <Text style={styles.activityText}>
+              Wrote {activity.journalContent.split(' ').length} words in your journal! Amazing!
+            </Text>
+          </>
+        );
+      case 'meditation':
+        return (
+          <>
+            <Text style={styles.cardTime}>
+              {addMinutesToTime(activity.date.toDate(), workDuration + breakDuration)}
+            </Text>
+            <Image source={MeditationIllustration} style={styles.illustrationMeditation} />
+            <Text style={styles.activityText}>
+              Meditated for {activity.breakDuration} minutes!
+            </Text>
+          </>
+        );
+      case 'walking':
+        return (
+          <>
+            <Text style={styles.cardTime}>
+              {addMinutesToTime(activity.date.toDate(), workDuration + breakDuration)}
+            </Text>
+            <Image source={WalkingIllustration} style={styles.illustration} />
+            <Text style={styles.activityText}>
+              Walked for {activity.breakDuration} minutes!
+            </Text>
+          </>
+        );
+      default:
+        return null;
+    }
   };
 
   const router = useRouter();
@@ -161,10 +262,7 @@ const HistoryScreen = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.calendarContainer}>
-        <Button
-        title="Go to Home (Testing)"
-        onPress={() => router.push('/home')}
-      />
+          <Button title="Go to Home (Testing)" onPress={() => router.push('/home')} />
           <Calendar
             current={month}
             onDayPress={handleDayPress}
@@ -187,9 +285,7 @@ const HistoryScreen = () => {
             }}
           />
         </View>
-        <View style={styles.activitiesContainer}>
-          {renderActivityCard()}
-        </View>
+        <View style={styles.activitiesContainer}>{renderActivityCard()}</View>
       </ScrollView>
       <Navbar />
     </View>
@@ -255,7 +351,7 @@ const styles = StyleSheet.create({
   cardBody: {
     width: '100%',
     padding: 15,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   lineContainer: {
     flexDirection: 'row',
@@ -281,6 +377,12 @@ const styles = StyleSheet.create({
     height: 70,
     marginRight: 10,
   },
+  illustrationMeditation: {
+    width: 71,
+    height: 70,
+    marginRight: 10,
+    marginLeft: 5,
+  },
   activityText: {
     fontSize: 14,
     color: '#2D4150',
@@ -298,7 +400,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#BBB9B5',
-  }
+  },
+  victoryTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  victoryText: {
+    fontSize: 14,
+  },
+  victoryContainer: {
+    marginBottom: 16,
+    marginLeft: 40,
+    alignItems: 'baseline',
+    backgroundColor: '#F1EDDF',
+    borderRadius: 10,
+    padding: 20,
+  },
 });
 
 export default HistoryScreen;
