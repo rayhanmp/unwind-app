@@ -262,7 +262,6 @@ const HistoryScreen = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.calendarContainer}>
-          <Button title="Go to Home (Testing)" onPress={() => router.push('/home')} />
           <Calendar
             current={month}
             onDayPress={handleDayPress}
