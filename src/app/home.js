@@ -13,6 +13,7 @@ export default function Home(){
     <View style={styles.container}>
     <Text>Home, Testing</Text>
     <Button onPress={() => router.push("/meditation")}>Go to Meditation</Button>
+    <Button onPress={() => router.push("/walking")}>Go to Walking</Button>
     <Button onPress={() => router.push({ pathname: "/doneActivity", params: { activity: 'walking', user: 'Gojo' } })}>
     Go to Reflection (Walking)</Button>
     <Button onPress={() => router.push({ pathname: "/doneActivity", params: { activity: 'meditation', user: 'Gojo' } })}>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 // Import images for different activities
 import WalkingImage from '../../assets/doneWalking.png';
@@ -10,8 +10,9 @@ import SemicircleImage from '../../assets/semicircle.png';
 
 const ReflectionScreen = () => {
   const route = useRoute();
-  const { activity, user } = route.params;
+  const { activity } = route.params;
   const [reflection, setReflection] = useState('');
+  const navigation = useNavigation();
 
   // Select image based on activity
   const activityImages = {
@@ -23,35 +24,46 @@ const ReflectionScreen = () => {
   const handleFinish = () => {
     // Handle reflection submission logic
     console.log('Reflection submitted:', reflection);
+    navigation.navigate('history');
     // Navigate to another screen or give feedback to the user
   };
 
   return (
-    <View style={styles.container}>
-      <Image source={SemicircleImage} style={styles.semicircleImage} />
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Good job, {user}</Text>
-        <Text style={styles.headerText}>You have finished:</Text>
-      </View>
-      <Image source={activityImages[activity]} style={styles.activityImage} />
-      <Text style={styles.reflectionPrompt}>Let's Reflect!</Text>
-      <Text style={styles.reflectionInstruction}>Write down what you’ve achieved today!</Text>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Today I did..."
-        multiline
-        value={reflection}
-        onChangeText={setReflection}
-      />
-      <TouchableOpacity style={styles.finishButton} onPress={handleFinish}>
-        <Text style={styles.finishButtonText}>FINISH</Text>
-      </TouchableOpacity>
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.inner}>
+          <Image source={SemicircleImage} style={styles.semicircleImage} />
+          <View style={styles.header}>
+            <Text style={styles.headerText}>Good job!</Text>
+            <Text style={styles.headerText}>You have finished:</Text>
+          </View>
+          <Image source={activityImages[activity]} style={styles.activityImage} />
+          <Text style={styles.reflectionPrompt}>Let's Reflect!</Text>
+          <Text style={styles.reflectionInstruction}>Write down what you’ve achieved today!</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Today I did..."
+            multiline
+            value={reflection}
+            onChangeText={setReflection}
+          />
+          <TouchableOpacity style={styles.finishButton} onPress={handleFinish}>
+            <Text style={styles.finishButtonText}>FINISH</Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  inner: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

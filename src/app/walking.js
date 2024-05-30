@@ -6,8 +6,11 @@ import energeticButton from '../../assets/energeticButton.png';
 import calmButton from '../../assets/calmButton.png';
 import ambianceButton from '../../assets/ambianceButton.png';
 import silenceButton from '../../assets/silenceButton.png';
+import { useRouter } from "expo-router";
+import { useNavigation } from '@react-navigation/native';
 
 const ShortWalkScreen = () => {
+  const navigation = useNavigation();
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <Image source={walkingBanner} style={styles.banner} /> 
@@ -34,7 +37,13 @@ const ShortWalkScreen = () => {
               <Image source={ambianceButton} style={styles.button} />
             </TouchableOpacity>
           </View>
-          <Button style={styles.buttonWide} mode="contained" onPress={() => console.log("clicked")}>START</Button> 
+          <Button
+            style={styles.buttonWide}
+            mode="contained"
+            onPress={() => navigation.navigate('walkingAudio', { breakTime: 300 })}
+          >
+            START
+          </Button>
         </Card.Content>
       </Card>
     </ScrollView>
@@ -45,7 +54,7 @@ const styles = StyleSheet.create({
   // Style the ScrollView content container
   scrollContainer: {
     flexGrow: 1,
-    backgroundColor: '#E7D6FF',
+    backgroundColor: '#F2AD72',
     alignItems: 'center', // Center content horizontally
   },
   banner: {
@@ -67,14 +76,12 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 15,
     fontWeight: 'bold',
+    fontSize: 28
   },
   minute: {
     fontWeight: 'bold',
   },
   description: {
-    textShadowColor: 'rgba(0, 0, 0, 0.15)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 3,
     fontSize: 15,
     marginTop: 10,
   },
@@ -102,7 +109,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 3,
     alignSelf: 'center',
-    backgroundColor: '#B28BEB',
+    backgroundColor: '#F2AD72',
   },
   divider: {
     marginTop: 35,
