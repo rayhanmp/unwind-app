@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Button } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import Navbar from './components/navbar';
+import { useRouter } from "expo-router";
 
 // Import illustrations
 import DefaultIllustration from '../../assets/noActivity.png';
@@ -117,7 +118,7 @@ const HistoryScreen = () => {
         </View>
       );
     }
-
+    
     return (
       <View style={styles.card}>
         <View style={styles.cardHeader}>
@@ -154,10 +155,16 @@ const HistoryScreen = () => {
     );
   };
 
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.calendarContainer}>
+        <Button
+        title="Go to Home (Testing)"
+        onPress={() => router.push('/home')}
+      />
           <Calendar
             current={month}
             onDayPress={handleDayPress}

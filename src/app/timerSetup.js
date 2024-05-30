@@ -13,7 +13,7 @@ const TimerSetupScreen = () => {
       if (workTime > 1) { // If workTime is greater than 1 minute
         setWorkTime(workTime - 5); // Decrease by 5 seconds
       } else {
-        setWorkTime(1); // Set it to 1 minute (60 seconds)
+        setWorkTime(1); // Set it to 10 minute (60 seconds)
       }
     } else {
       if (breakTime > 0) {
