@@ -25,12 +25,6 @@ export default function Article(){
       }
     };    
 
-    const renderCard = (amount) => {
-      return Array.from({ length : amount}).map((_, index) => (
-        <ArticleCard key={index}/>
-      ));
-    }
-
     useEffect(() =>{
       fetchData(); 
     })
@@ -53,6 +47,7 @@ export default function Article(){
                 date={`${article.date.toDate().getDate()}`}
                 month={`${article.date.toDate().getMonth()}`}
                 year={`${article.date.toDate().getFullYear()}`}
+                id={article.id}
               />
             ))}
           </View>
