@@ -10,11 +10,13 @@ import workSessionRecord from "../../assets/workSessionRecord.png";
 import wordWrittenJournalRecord from "../../assets/wordWrittenJournalRecord.png";
 import walkingSessionRecord from "../../assets/walkingSessionRecord.png";
 import meditationSessionRecord from "../../assets/meditationSessionRecord.png";
+import { useRouter } from 'expo-router';
 
 const PIXEL3A_WIDTH = 393;
 const PIXEL3A_HEIGHT = 740;
 
 const { width, height } = Dimensions.get('window');
+const router = useRouter();
 
 const scaleFont = (size) => (width / PIXEL3A_WIDTH) * size;
 
@@ -99,7 +101,7 @@ export default function Setting() {
             <Text style={styles.h3}>Password</Text>
             <Text style={styles.loginContent}>************</Text>
           </View>
-          <TouchableOpacity style={styles.premiumPromotion}>
+          <TouchableOpacity style={styles.premiumPromotion} onPress={() => router.push("/unwindPremium")}>
             <Image source={premiumPromotion} style={styles.promotionImage} />
             <View style={styles.premiumPromotionContent}>
               <Text style={styles.h3Black}>Looking to get more features?</Text>
