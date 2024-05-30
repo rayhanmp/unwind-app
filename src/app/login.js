@@ -29,7 +29,7 @@ export default function Login() {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       if (userCredential.user) {
-        router.push('/calendar');
+        router.push('/history');
       }
     } catch (error) {
       console.log(error.code);

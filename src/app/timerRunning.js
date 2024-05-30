@@ -8,7 +8,7 @@ const TimerRunning = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { workTime } = route.params;
-  const [secondsLeft, setSecondsLeft] = useState(workTime * 60);
+  const [secondsLeft, setSecondsLeft] = useState(workTime);
   const [isRunning, setIsRunning] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
