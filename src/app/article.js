@@ -50,7 +50,9 @@ export default function Article(){
                 content={article.content}
                 authorName={article.authorName}
                 // Accessing date.seconds and date.nanoseconds
-                date={`${article.date.toDate().getMonth()}`}
+                date={`${article.date.toDate().getDate()}`}
+                month={`${article.date.toDate().getMonth()}`}
+                year={`${article.date.toDate().getFullYear()}`}
               />
             ))}
           </View>
