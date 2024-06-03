@@ -13,7 +13,7 @@ const BasicJournalScreen = () => {
       <Image source={journalingBanner} style={styles.banner} /> 
       <Card style={styles.card}>
         <Card.Content>
-          <Title style={styles.title}>Basic Meditation</Title>
+          <Title style={styles.title}>Journaling</Title>
           <Paragraph style={styles.minute}>10 min</Paragraph>
           <Paragraph style={styles.description}>
             Increase self awareness and appreciation for the little things you did today!
