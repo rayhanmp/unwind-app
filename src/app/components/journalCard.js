@@ -4,23 +4,23 @@ import { router, useRouter } from "expo-router"
 import { View, StyleSheet} from "react-native"
 
 
-export default function JournalCard({isFirst}){
+export default function JournalCard({isFirst, title, content, day, date}){
     const router = useRouter()
-
+    day_string = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     return (
         <View style={styles.container}>
             {isFirst &&
             <View style={{alignItems:"center", marginRight:10}}>
-                <Text style={{ color: "#BBB9B5"}}>SAT</Text>
+                <Text style={{ color: "#BBB9B5"}}>{day_string[day]}</Text>
                 <View style={styles.date}>
-                    <Text style={{fontSize:20, fontWeight:"bold",color:"#F8F7F3"}}>21</Text>
+                    <Text style={{fontSize:20, fontWeight:"bold",color:"#F8F7F3"}}>{date}</Text>
                 </View>
             </View>
             }
             <Card mode="contained" style={{width:'85%', alignSelf:'center', backgroundColor:"#F8F7F3"}} onPress={() => router.push("/journalDetail")} contentStyle={{color:"black"}}>
                     <Card.Content>
-                    <   Text variant="titleMedium" style={{color:"#9768CD", fontSize:18}}>UI/UX adventures</Text>
-                        <Text variant="bodySmall" style={{color:"#2A1735", fontSize:13}}>Today i did a lot, I managed to finish my tasks for the UI/UX design they assigned me and honestly I’m quite proud of it. </Text>
+                        <Text variant="titleMedium" style={{color:"#9768CD", fontSize:18}}>{title}</Text>
+                        <Text variant="bodySmall" style={{color:"#2A1735", fontSize:13}}>{content}</Text>
                     </Card.Content>
             </Card>
         </View>

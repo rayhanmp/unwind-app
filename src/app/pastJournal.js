@@ -4,8 +4,32 @@ import Navbar from './components/navbar';
 import { PaperProvider, Divider } from 'react-native-paper';
 import journal from '../../assets/Journal.png'
 import JournalCard from './components/journalCard';
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useEffect, useState } from 'react';
+import { FIREBASE_DB } from '../../firebaseConfig';
 
 export default function PastJournal(){
+  const [journals, setJournals] = useState([]); 
+
+  const fetchData = async () => {
+    try {
+      const data_query = query(collection(FIREBASE_DB, "workSession"), where("activityType", "==", "journaling"));
+      const querySnapshot = await getDocs(data_query);
+      const fetchedJournals = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setJournals(fetchedJournals);
+      console.log(fetchedJournals)
+    } catch (error) {
+      console.error("Error fetching articles: ", error);
+    }
+  };    
+
+  useEffect(() =>{
+    fetchData(); 
+  }, []); 
+
     return (<View style={styles.container}>
       <PaperProvider>
         <View style={styles.journalHeader}>
@@ -15,10 +39,22 @@ export default function PastJournal(){
         <Divider style={styles.divider} />
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
             <Text style={{fontSize:20, fontWeight:"bold", color: '#BBB9B5',marginBottom: 10}}>OCTOBER 2023</Text>
+            {
+              journals.map(journal => (
+                <JournalCard 
+                isFirst={true}
+                key={journal.id}
+                title={journal.journalTitle}
+                content={journal.journalContent}
+                date={`${journal.date.toDate().getDate()}`}
+                day={`${journal.date.toDate().getDay()}`}
+                />
+              ))
+            }
+
+            {/* <JournalCard isFirst={false}/>
             <JournalCard isFirst={true}/>
-            <JournalCard isFirst={false}/>
-            <JournalCard isFirst={true}/>
-            <JournalCard isFirst={false}/>
+            <JournalCard isFirst={false}/> */}
         </ScrollView>
         <Navbar />
       </PaperProvider>

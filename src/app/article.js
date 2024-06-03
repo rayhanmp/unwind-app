@@ -27,7 +27,7 @@ export default function Article(){
 
     useEffect(() =>{
       fetchData(); 
-    })
+    },[]); 
 
     return (
       <View style={styles.container}>
