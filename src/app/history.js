@@ -215,7 +215,7 @@ const HistoryScreen = () => {
     };
 
     switch (activity.activityType) {
-      case 'journaling':
+      case 'journal':
         return (
           <>
             <Text style={styles.cardTime}>

@@ -3,11 +3,14 @@ import { View, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-nat
 import { Card, Title, Paragraph, Divider, Button } from 'react-native-paper';
 import meditationBanner from '../../assets/meditationBanner.png'; // Ensure the path is correct
 import { useRouter } from "expo-router";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import journalingBanner from "../../assets/journallingBanner.png"
 
 const BasicJournalScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { workTime, breakTime, startTime, chosenActivity } = route.params;
+
   return (
     <View style={styles.container}>
       <Image source={journalingBanner} style={styles.banner} /> 
