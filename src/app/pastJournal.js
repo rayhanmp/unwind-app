@@ -48,6 +48,7 @@ export default function PastJournal(){
                 content={journal.journalContent}
                 date={`${journal.date.toDate().getDate()}`}
                 day={`${journal.date.toDate().getDay()}`}
+                id={journal.id}
                 />
               ))
             }
