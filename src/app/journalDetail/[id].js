@@ -22,6 +22,7 @@ export default function JournalDetail(){
     "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
     ];
     day_string = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+    
     const fetchData = async () => {
         const docRef = doc(FIREBASE_DB, "workSession", id);
         const docSnap = await getDoc(docRef);
@@ -39,6 +40,10 @@ export default function JournalDetail(){
           console.log("No such document!");
         }
       };  
+
+    const formatNumber = (number) =>{
+        return number < 10 ? `0${number}` : number;
+    }
 
     useEffect(() =>{
     fetchData(); 
@@ -66,7 +71,7 @@ export default function JournalDetail(){
                         </View>
                         <View style={{flexDirection:"row", alignItems:"center"}}>
                             <Image source={clock} style={{height:20, width:20, marginRight:10}}></Image>
-                            <Text style={{color: "#BBB9B5", fontSize:18}}>{hour}:{minute}</Text>
+                            <Text style={{color: "#BBB9B5", fontSize:18}}>{formatNumber(hour)}:{formatNumber(minute)}</Text>
                         </View>
                     </View>
                 </View>
