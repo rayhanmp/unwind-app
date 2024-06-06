@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 export default function MeditationAudio() {
   const route = useRoute();
   const navigation = useNavigation();
-  const { breakTime } = route.params;
+  const { workTime, breakTime, startTime, chosenActivity } = route.params;
 
   const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -85,7 +85,7 @@ export default function MeditationAudio() {
           sound.unloadAsync();
         });
       }
-      navigation.navigate('doneActivity', { activity: 'meditation', user: 'gojo' });
+      navigation.navigate('doneActivity', { workTime, breakTime, startTime, chosenActivity })
     }
   }, [timeLeft]);
 
@@ -94,7 +94,7 @@ export default function MeditationAudio() {
       await sound.stopAsync();
       await sound.unloadAsync();
     }
-    navigation.navigate('doneActivity', { activity: 'meditation', user: 'gojo' });
+    navigation.navigate('doneActivity', { workTime, breakTime, startTime, chosenActivity })
   };
 
   return (

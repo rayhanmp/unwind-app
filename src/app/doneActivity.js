@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { FIREBASE_DB } from '../../firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
 
 // Import images for different activities
 import WalkingImage from '../../assets/doneWalking.png';
@@ -10,22 +12,37 @@ import SemicircleImage from '../../assets/semicircle.png';
 
 const ReflectionScreen = () => {
   const route = useRoute();
-  const { activity } = route.params;
+  const { workTime, breakTime, startTime, chosenActivity } = route.params;
   const [reflection, setReflection] = useState('');
   const navigation = useNavigation();
+  const activity = chosenActivity;
+
+  const workTimeInMinutes = Math.floor(workTime / 60);
+  const breakTimeInMinutes = Math.floor(breakTime / 60);
 
   // Select image based on activity
   const activityImages = {
     walking: WalkingImage,
     meditation: MeditationImage,
-    journaling: JournalingImage,
+    journal: JournalingImage,
   };
 
-  const handleFinish = () => {
-    // Handle reflection submission logic
-    console.log('Reflection submitted:', reflection);
-    navigation.navigate('history');
-    // Navigate to another screen or give feedback to the user
+  const handleFinish = async () => {
+    try {
+      const firebaseTimestamp = new Date(startTime);
+      await addDoc(collection(FIREBASE_DB, 'workSession'), {
+        activityType: chosenActivity,
+        breakDuration: breakTimeInMinutes,
+        date: firebaseTimestamp,
+        makerID: 'test',
+        reflection: reflection,
+        workDuration: workTimeInMinutes
+      });
+      console.log('Reflection submitted:', reflection, firebaseTimestamp);
+      navigation.navigate('history');
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
   };
 
   return (

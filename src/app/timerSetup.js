@@ -70,7 +70,10 @@ const TimerSetupScreen = () => {
       </View>
       <Pressable 
         style={styles.startButton} 
-        onPress={() => navigation.navigate('timerRunning', { workTime })}
+        onPress={() => {
+          const startTime = new Date();
+          navigation.navigate('timerRunning', { workTime, breakTime, startTime });
+        }}
       >
         <Text style={styles.startButtonText}>LET'S START!</Text>
       </Pressable>
