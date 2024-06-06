@@ -1,6 +1,6 @@
 import { Card } from "react-native-paper"
 import { Text } from "react-native-paper"
-import { router, useRouter, Redirect } from "expo-router"
+import {useRouter} from "expo-router"
 
 
 export default function ArticleCard({title, imageLink, date, month, year, id}){
@@ -10,7 +10,8 @@ export default function ArticleCard({title, imageLink, date, month, year, id}){
   ];
   
     return (
-        <Card style={{width:'100%', alignSelf:'center', marginVertical:10, backgroundColor:"#F8F7F3"}} onPress={() => router.push(
+        <Card style={{width:'100%', alignSelf:'center', marginVertical:10, backgroundColor:"#F8F7F3"}} onPress={() => 
+                router.push(
                 {pathname : "/articleDetail/[id]",
                 params: {id : id}
             }

@@ -40,7 +40,7 @@ export default function ArticleDetail(){
 
   useEffect(() =>{
     fetchData(); 
-  })
+  }, [])
 
     return (<View style={styles.container}>
       <PaperProvider>
