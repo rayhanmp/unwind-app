@@ -3,10 +3,10 @@ import { View, StyleSheet, Text, TouchableOpacity, ImageBackground } from 'react
 import { Audio } from 'expo-av';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
-import meditationAudioBg from '../../assets/meditationAudioBg.png';
+import walkingAudioBg from '../../assets/walkingAudioBg.png';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function MeditationAudio() {
+export default function WalkingAudio() {
   const route = useRoute();
   const navigation = useNavigation();
   const { workTime, breakTime, startTime, chosenActivity } = route.params;
@@ -98,7 +98,7 @@ export default function MeditationAudio() {
   };
 
   return (
-    <ImageBackground source={meditationAudioBg} style={styles.backgroundImage}>
+    <ImageBackground source={walkingAudioBg} style={styles.backgroundImage}>
       <View style={styles.container}>
         <Text style={styles.breakTimeText}>BREAK TIME</Text>
         <Text style={styles.timeText}>{new Date(timeLeft * 1000).toISOString().substr(14, 5)}</Text>
@@ -106,20 +106,20 @@ export default function MeditationAudio() {
         <View style={styles.controls}>
           <TouchableOpacity onPress={skipBackward}>
             <View style={styles.iconContainer}>
-              <Ionicons name="play-back-outline" size={40} color="#B28BEB" />
+              <Ionicons name="play-back-outline" size={40} color="#F2AD72" />
             </View>
             <Text style={styles.skipText}>15</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={playPauseSound}>
             <View style={styles.iconContainer}>
-              <Ionicons name={isPlaying ? "pause-circle" : "play-circle"} size={80} color="#B28BEB" />
+              <Ionicons name={isPlaying ? "pause-circle" : "play-circle"} size={80} color="#F2AD72" />
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={skipForward}>
             <View style={styles.iconContainer}>
-              <Ionicons name="play-forward-outline" size={40} color="#B28BEB" />
+              <Ionicons name="play-forward-outline" size={40} color="#F2AD72" />
             </View>
             <Text style={styles.skipText}>15</Text>
           </TouchableOpacity>
@@ -131,9 +131,9 @@ export default function MeditationAudio() {
           maximumValue={breakTime * 1000}
           value={position}
           onValueChange={(value) => sound.setPositionAsync(value)}
-          minimumTrackTintColor="#B28BEB"
-          maximumTrackTintColor="#d3d3d3"
-          thumbTintColor="#B28BEB"
+          minimumTrackTintColor="#F2AD72"
+          maximumTrackTintColor="#F2AD72"
+          thumbTintColor="#F2AD72"
         />
 
         <View style={styles.timeLabels}>
@@ -166,13 +166,13 @@ const styles = StyleSheet.create({
   breakTimeText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#B28BEB',
+    color: '#F2AD72',
     marginBottom: 10,
   },
   timeText: {
     fontSize: 80,
     fontWeight: 'bold',
-    color: '#7D4DB4',
+    color: '#C67133',
     marginBottom: 20,
   },
   controls: {
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   skipText: {
-    color: '#B28BEB',
+    color: '#F2AD72',
     fontSize: 12,
     textAlign: 'center',
   },
@@ -196,12 +196,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   timeLabel: {
-    color: '#B28BEB',
+    color: '#F2AD72',
   },
   doneButton: {
     width: '90%',
     padding: 15,
-    backgroundColor: '#B28BEB',
+    backgroundColor: '#F2AD72',
     borderRadius: 20,
     alignItems: 'center',
     marginTop: 20,

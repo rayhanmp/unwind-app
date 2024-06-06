@@ -21,7 +21,7 @@ export default function Register() {
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       console.log(user);
-      router.push('/home');
+      router.push('/history');
     }
     catch (error) {
       console.log(error.message);

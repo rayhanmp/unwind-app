@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { useRouter } from "expo-router";
+import { useNavigation, useRoute } from '@react-navigation/native';
 import timerDoneIllust from '../../assets/timerDoneIllust.png';
 
 const TimerDone = () => {
-    const router = useRouter();
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { workTime, breakTime, startTime } = route.params;
 
     return (
       <View style={styles.container}>
@@ -13,7 +15,7 @@ const TimerDone = () => {
           source={timerDoneIllust} // Update this path to your illustration file
           style={styles.illustration}
         />
-        <TouchableOpacity style={styles.continueButton} onPress={() => {router.push("/pickActivities")}}>
+        <TouchableOpacity style={styles.continueButton} onPress={() => navigation.navigate('pickActivities', { workTime, breakTime, startTime })}>
           <Text style={styles.continueButtonText}>CONTINUE</Text>
         </TouchableOpacity>
       </View>

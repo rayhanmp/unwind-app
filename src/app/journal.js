@@ -2,67 +2,43 @@ import React from 'react';
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Card, Title, Paragraph, Divider, Button } from 'react-native-paper';
 import meditationBanner from '../../assets/meditationBanner.png'; // Ensure the path is correct
-import femaleTutorButton from '../../assets/femaleTutorButton.png';
-import maleTutorButton from '../../assets/maleTutorButton.png';
-import ambianceButton from '../../assets/ambianceButton.png';
-import silenceButton from '../../assets/silenceButton.png';
 import { useRouter } from "expo-router";
 import { useNavigation, useRoute } from '@react-navigation/native';
+import journalingBanner from "../../assets/journallingBanner.png"
 
-const BasicMeditationScreen = () => {
+const BasicJournalScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { workTime, breakTime, startTime, chosenActivity } = route.params;
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Image source={meditationBanner} style={styles.banner} /> 
+    <View style={styles.container}>
+      <Image source={journalingBanner} style={styles.banner} /> 
       <Card style={styles.card}>
         <Card.Content>
-          <Title style={styles.title}>Basic Meditation</Title>
+          <Title style={styles.title}>Journaling</Title>
           <Paragraph style={styles.minute}>10 min</Paragraph>
           <Paragraph style={styles.description}>
-            Live happier and healthier by learning the fundamentals of meditation and mindfulness
+            Increase self awareness and appreciation for the little things you did today!
           </Paragraph>
-          <Divider style={styles.divider} />
-          <Paragraph style={styles.subtitle}>Choose how you meditate!</Paragraph>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={() => console.log("clicked")}>
-              <Image source={silenceButton} style={styles.button} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log("clicked")}>
-              <Image source={femaleTutorButton} style={styles.button} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log("clicked")}>
-              <Image source={maleTutorButton} style={styles.button} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log("clicked")}>
-              <Image source={ambianceButton} style={styles.button} />
-            </TouchableOpacity>
-          </View>
           <Button
             style={styles.buttonWide}
             mode="contained"
-            onPress={() => navigation.navigate('meditationAudio', { workTime, breakTime, startTime, chosenActivity })}
+            onPress={() => navigation.navigate('meditationAudio', { breakTime: 300 })}
           >
             START
           </Button>
         </Card.Content>
       </Card>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   // Style the ScrollView content container
-  scrollContainer: {
-    flexGrow: 1,
-    backgroundColor: '#E7D6FF',
-    alignItems: 'center', // Center content horizontally
-  },
   banner: {
     width: '100%',
-    height: 300, // Adjust the height as needed
+    height: 550, // Adjust the height as needed
     resizeMode: 'cover',
   },
   card: {
@@ -75,6 +51,9 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     padding: 5,
     backgroundColor: '#F8F7F3',
+    position:'absolute',
+    bottom:0,
+    width:"100%"
   },
   title: {
     marginTop: 15,
@@ -104,7 +83,7 @@ const styles = StyleSheet.create({
     width: 160,
     height: 139,
     margin: 5,
-    borderRadius: 10,
+    borderRadius: 10
   },
   buttonWide: {
     marginTop: 10,
@@ -114,11 +93,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#B28BEB',
   },
-  divider: {
-    marginTop: 35,
-    backgroundColor: '#E8E8E8',
-    height: 2.5,
-  },
+  container: {
+    flex: 1,
+    height:"100%"
+  }
 });
 
-export default BasicMeditationScreen;
+export default BasicJournalScreen;

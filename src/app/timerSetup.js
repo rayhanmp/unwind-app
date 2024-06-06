@@ -5,44 +5,37 @@ import { useNavigation } from '@react-navigation/native';
 
 const TimerSetupScreen = () => {
   const navigation = useNavigation();
-  const [workTime, setWorkTime] = useState(1);
-  const [breakTime, setBreakTime] = useState(10);
+  const [workTime, setWorkTime] = useState(10); // time in seconds
+  const [breakTime, setBreakTime] = useState(600); // time in seconds (10 minutes)
 
   const decreaseTime = (type) => {
     if (type === 'work') {
-      if (workTime > 1) { // If workTime is greater than 1 minute
-        setWorkTime(workTime - 5); // Decrease by 5 seconds
+      if (workTime > 300) { // If workTime is greater than 5 minutes (300 seconds)
+        setWorkTime(workTime - 300); // Decrease by 5 minutes (300 seconds)
       } else {
-        setWorkTime(1); // Set it to 1 minute (60 seconds)
+        setWorkTime(300); // Set it to 5 minutes (300 seconds)
       }
     } else {
-      if (breakTime > 0) {
-        setBreakTime(breakTime - 5);
+      if (breakTime > 300) {
+        setBreakTime(breakTime - 300);
       } else {
-        setBreakTime(0);
+        setBreakTime(300);
       }
     }
   };
-  
+
   const increaseTime = (type) => {
     if (type === 'work') {
-      if (workTime < 1) { // If workTime is less than 1 minute
-        setWorkTime(5); // Set it to 5 minutes (300 seconds)
-      } else {
-        setWorkTime(workTime + 5); // Increase by 5 seconds
-      }
+      setWorkTime(workTime + 300); // Increase by 5 minutes (300 seconds)
     } else {
-      if (breakTime < 1) {
-        setBreakTime(breakTime + 5);
-      } else {
-        setBreakTime(1);
-      }
+      setBreakTime(breakTime + 300); // Increase by 5 minutes (300 seconds)
     }
   };
-  
 
   const formatTime = (time) => {
-    return `${time < 5 ? '0' : ''}${time}:00`;
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
   return (
@@ -77,11 +70,15 @@ const TimerSetupScreen = () => {
       </View>
       <Pressable 
         style={styles.startButton} 
-        onPress={() => navigation.navigate('timerRunning', { workTime })}
+        onPress={() => {
+          const startTime = new Date();
+          navigation.navigate('timerRunning', { workTime, breakTime, startTime });
+        }}
       >
         <Text style={styles.startButtonText}>LET'S START!</Text>
       </Pressable>
-      <Pressable style={styles.cancelButton} onPress={() => navigation.navigate('home')}>
+      <Pressable style={styles.cancelButton}
+      onPress={() => navigation.navigate('history')}>
         <Text style={styles.cancelButtonText}>CANCEL</Text>
       </Pressable>
     </View>
