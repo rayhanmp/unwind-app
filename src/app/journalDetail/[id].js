@@ -1,5 +1,5 @@
 import { ScrollView, View, Text, StyleSheet, Pressable, Image} from "react-native"
-import { Divider, PaperProvider } from "react-native-paper"
+import { Divider, PaperProvider, TextInput } from "react-native-paper"
 import Navbar from "../components/navbar"
 import backArrow from "../../../assets/backArrow.png"
 import clock from "../../../assets/clock.png"
@@ -81,6 +81,7 @@ export default function JournalDetail(){
                         <Text>
                             {content}
                         </Text>
+
                 </ScrollView>
                 <Navbar />
             </PaperProvider>

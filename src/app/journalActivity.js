@@ -1,86 +1,62 @@
 import { ScrollView, View, Text, StyleSheet, Pressable, Image} from "react-native"
-import { Divider, PaperProvider } from "react-native-paper"
+import { Divider, PaperProvider, TextInput } from "react-native-paper"
 import Navbar from './components/navbar';
 import backArrow from "../../assets/backArrow.png"
 import clock from "../../assets/clock.png"
-import { useRouter } from "expo-router"
+import { useRoute } from '@react-navigation/native';
 import { useLocalSearchParams } from "expo-router"
-import { useState, useEffect} from "react"
+import { useState, useEffect } from "react"
 import { FIREBASE_DB } from "../../firebaseConfig"
-import {doc, getDoc } from "firebase/firestore"
 
-export default function JournalDetail(){
-    const [date, setDate] = useState('')
-    const [day, setDay] = useState('')
-    const [month, setMonth] = useState('')
-    const [year, setYear] = useState('')
-    const [title, setTitle] = useState('')
-    const [content, setContent] = useState('')
-    const [hour, setHour] = useState('')
-    const [minute, setMinute] = useState('')
+export default function journalActivity(){
+    const route = useRoute()
+    // const { workTime, breakTime, startTime, chosenActivity } = route.params;
     const monthName = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
     "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
     ];
     day_string = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-    
-    const fetchData = async () => {
-        const docRef = doc(FIREBASE_DB, "workSession", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            setDate(docSnap.data().date.toDate().getDate())
-            setMonth(docSnap.data().date.toDate().getMonth())
-            setYear(docSnap.data().date.toDate().getFullYear())
-            setDay(docSnap.data().date.toDate().getDay())
-            setHour(docSnap.data().date.toDate().getHours())
-            setMinute(docSnap.data().date.toDate().getMinutes())
-            setTitle(docSnap.data().journalTitle)
-            setContent(docSnap.data().journalContent)
-            console.log(docSnap)
-        } else {
-          console.log("No such document!");
-        }
-      };  
 
-    const formatNumber = (number) =>{
-        return number < 10 ? `0${number}` : number;
-    }
 
-    useEffect(() =>{
-    fetchData(); 
-    }, [])
-
-    const { id } = useLocalSearchParams();  
-    router = useRouter()
     return(
         <View style={styles.container}>
             <PaperProvider>
+                <View style={styles.journalTimer}>
+                        <Text style={{alignSelf:"center", color:"#F8F7F3"}}>
+                            BREAK TIME
+                        </Text>
+                        <Text style={{alignSelf:"center", fontSize:28, color:"#F8F7F3", fontWeight: "bold"}}>
+                            10:00
+                        </Text>
+                </View>
                 <View style={styles.journalHeader}>
-                    <Pressable onPress={()=>{router.push("/pastJournal")}}>
-                        <Image
-                            style={{  width: 27, height: 25 }}
-                            source={backArrow}
-                        />
-                    </Pressable>
                     <View style={{flexDirection:"row", justifyContent:"space-between", marginVertical: 10}}>
                         <View style={{alignItems:"center"}}>
                             <View style={{flexDirection:"row"}}>
-                                <Text style={{fontSize:28, fontWeight:"bold", color:"#9768CD"}}>{date}</Text>
-                                <Text style={{fontSize:28, fontWeight:"bold", color:"#2A1735"}}> {monthName[month]}</Text>
+                                <Text style={{fontSize:28, fontWeight:"bold", color:"#9768CD"}}>1</Text>
+                                <Text style={{fontSize:28, fontWeight:"bold", color:"#2A1735"}}>1</Text>
                             </View>
-                            <Text style={{fontSize:15}}>{year}, {day_string[day]} </Text>
-                        </View>
-                        <View style={{flexDirection:"row", alignItems:"center"}}>
-                            <Image source={clock} style={{height:20, width:20, marginRight:10}}></Image>
-                            <Text style={{color: "#BBB9B5", fontSize:18}}>{formatNumber(hour)}:{formatNumber(minute)}</Text>
+                            <Text style={{fontSize:15}}>,</Text>
                         </View>
                     </View>
                 </View>
                 <Divider style={styles.divider} />
                 <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                        <Text style={{fontSize:25, fontWeight:'bold', color:"#9768CD", marginBottom:10}}>{title}</Text>
-                        <Text>
-                            {content}
-                        </Text>
+                        <TextInput
+                            style={styles.inputTitle}
+                            underlineColor="#F8F7F3"
+                            activeUnderlineColor="#F8F7F3"
+                            placeholder="Input Title"
+                            placeholderTextColor="#B28BEB"
+                            textColor="#9768CD"
+                        />
+                        <TextInput
+                            style={styles.inputContent}
+                            underlineColor="#F8F7F3"
+                            activeUnderlineColor="#F8F7F3"
+                            multiline={true}
+                            placeholder="Write your thoughts..."
+                            placeholderTextColor="#BBB9B5"
+                        />
                 </ScrollView>
                 <Navbar />
             </PaperProvider>
@@ -106,5 +82,25 @@ const styles = StyleSheet.create({
         height: "18%",
         paddingHorizontal: "5%",
         paddingTop: "15%"
+    },
+    inputContent: {
+        paddingHorizontal: 0,
+        backgroundColor: '#F8F7F3',
+    },
+    inputTitle: {
+        paddingHorizontal: 0,
+        backgroundColor: '#F8F7F3',
+        fontSize:25, 
+        fontWeight:'bold', 
+        color:"#9768CD"
+    },
+    journalTimer:{
+        backgroundColor: '#F2AD72',
+        width: "50%",
+        alignSelf: "center",
+        padding: 2,
+        paddingTop: 27,
+        borderBottomRightRadius : 15,
+        borderBottomLeftRadius : 15, 
     }
   });

@@ -24,7 +24,7 @@ const BasicJournalScreen = () => {
           <Button
             style={styles.buttonWide}
             mode="contained"
-            onPress={() => navigation.navigate('meditationAudio', { breakTime: 300 })}
+            onPress={() => navigation.navigate('journalActivity', { workTime, breakTime, startTime, chosenActivity })}
           >
             START
           </Button>

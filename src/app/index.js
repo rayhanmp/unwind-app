@@ -21,9 +21,9 @@ export default function App() {
       <Button style={styles.buttonWide} mode="contained" onPress={()=>{router.push("/register")}}>
         SIGN UP
       </Button>
-      {/* <Button style={styles.buttonWide} mode="contained" onPress={()=>{router.push("/history")}}>
+      <Button style={styles.buttonWide} mode="contained" onPress={()=>{router.push("/journalActivity")}}>
         [TESTING] home button
-      </Button> */}
+      </Button>
       <Link href="/login" style={styles.smallText}>ALREADY HAVE AN ACCOUNT? LOG IN</Link>
     </ScrollView>
   );
