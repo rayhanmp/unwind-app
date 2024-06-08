@@ -48,7 +48,7 @@ const PickActivities = () => {
         </Pressable>
         <Pressable
           style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
-          onPress={() => navigateToActivity('journal')}
+          onPress={() => navigateToActivity('journaling')}
         >
           <Image source={pickActivityJournalling} style={styles.cardBanner} />
           <View style={styles.cardContent}>
