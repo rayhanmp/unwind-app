@@ -216,6 +216,7 @@ const HistoryScreen = () => {
 
     switch (activity.activityType) {
       case 'journal':
+        const wordCount = activity.journalContent ? activity.journalContent.split(' ').length : 0;
         return (
           <>
             <Text style={styles.cardTime}>
@@ -223,7 +224,7 @@ const HistoryScreen = () => {
             </Text>
             <Image source={JournalIllustration} style={styles.illustration} />
             <Text style={styles.activityText}>
-              Wrote {activity.journalContent.split(' ').length} words in your journal! Amazing!
+              Wrote {wordCount} words in your journal! Amazing!
             </Text>
           </>
         );
