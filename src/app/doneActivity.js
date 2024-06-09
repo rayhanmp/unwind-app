@@ -12,7 +12,7 @@ import SemicircleImage from '../../assets/semicircle.png';
 
 const ReflectionScreen = () => {
   const route = useRoute();
-  const { workTime, breakTime, startTime, chosenActivity } = route.params;
+  const { workTime, breakTime, startTime, chosenActivity, journalTitle="", journalContent=""} = route.params;
   const [reflection, setReflection] = useState('');
   const navigation = useNavigation();
   const activity = chosenActivity;
@@ -30,14 +30,27 @@ const ReflectionScreen = () => {
   const handleFinish = async () => {
     try {
       const firebaseTimestamp = new Date(startTime);
-      await addDoc(collection(FIREBASE_DB, 'workSession'), {
-        activityType: chosenActivity,
-        breakDuration: breakTimeInMinutes,
-        date: firebaseTimestamp,
-        makerID: 'test',
-        reflection: reflection,
-        workDuration: workTimeInMinutes
-      });
+      if (chosenActivity != "journaling") {
+        await addDoc(collection(FIREBASE_DB, 'workSession'), {
+          activityType: chosenActivity,
+          breakDuration: breakTimeInMinutes,
+          date: firebaseTimestamp,
+          makerID: 'test',
+          reflection: reflection,
+          workDuration: workTimeInMinutes
+        });
+      } else {
+        await addDoc(collection(FIREBASE_DB, 'workSession'), {
+          activityType: chosenActivity,
+          breakDuration: breakTimeInMinutes,
+          date: firebaseTimestamp,
+          makerID: 'test',
+          reflection: reflection,
+          workDuration: workTimeInMinutes,
+          journalTitle : String(journalTitle),
+          journalContent : String(journalContent)
+        });
+      }
       console.log('Reflection submitted:', reflection, firebaseTimestamp);
       navigation.navigate('history');
     } catch (error) {

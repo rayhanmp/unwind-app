@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import timerRunningIllust from '../../assets/timerRunningIllust.png';
 import QuitModal from './components/quitModal'; // Adjust the path according to your folder structure
+import { useCallback } from 'react';
 
 const TimerRunning = () => {
   const navigation = useNavigation();
