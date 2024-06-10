@@ -1,7 +1,5 @@
-// File: Setting.js
-
 import * as React from 'react';
-import { ScrollView, View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground, TextInput, Dimensions } from 'react-native'; 
+import { ScrollView, View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground, TextInput, Dimensions, Alert } from 'react-native'; 
 import { Button, Modal, Portal, Provider as PaperProvider, Title } from 'react-native-paper';
 import Navbar from './components/navbar';
 import premiumPromotion from "../../assets/premiumPromotion.png";
@@ -10,6 +8,8 @@ import workSessionRecord from "../../assets/workSessionRecord.png";
 import wordWrittenJournalRecord from "../../assets/wordWrittenJournalRecord.png";
 import walkingSessionRecord from "../../assets/walkingSessionRecord.png";
 import meditationSessionRecord from "../../assets/meditationSessionRecord.png";
+import { useRouter } from 'expo-router';
+import { getAuth, signOut } from 'firebase/auth';
 
 const PIXEL3A_WIDTH = 393;
 const PIXEL3A_HEIGHT = 740;
@@ -66,15 +66,37 @@ const Records = () => (
   </View>
 );
 
-const DangerZone = () => (
-  <View style={styles.dangerContainer}>
-    <Text style={styles.h2Red}>Danger Zone</Text>
-    <View style={styles.dangerContent}>
-      <Button style={styles.buttonWideDanger} mode="contained" onPress={() => console.log("clicked")}>LOGOUT</Button> 
-      <Button style={styles.buttonWideOutlineDanger} mode="contained" onPress={() => console.log("clicked")}><Text style={{ color: '#D75D5D' }}>DELETE ACCOUNT</Text></Button> 
+const DangerZone = () => {
+  const auth = getAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push('/login');
+    } catch (error) {
+      Alert.alert('Logout Failed', 'Failed to logout. Please try again later.');
+      console.error(error);
+    }
+  };
+
+  const handleDeleteAccount = () => {
+    // Add your delete account logic here
+    console.log('Delete account clicked');
+  };
+
+  return (
+    <View style={styles.dangerContainer}>
+      <Text style={styles.h2Red}>Danger Zone</Text>
+      <View style={styles.dangerContent}>
+        <Button style={styles.buttonWideDanger} mode="contained" onPress={handleLogout}>LOGOUT</Button> 
+        <Button style={styles.buttonWideOutlineDanger} mode="contained" onPress={handleDeleteAccount}>
+          <Text style={{ color: '#D75D5D' }}>DELETE ACCOUNT</Text>
+        </Button> 
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 export default function Setting() {
   const [visible, setVisible] = React.useState(false);
@@ -99,7 +121,7 @@ export default function Setting() {
             <Text style={styles.h3}>Password</Text>
             <Text style={styles.loginContent}>************</Text>
           </View>
-          <TouchableOpacity style={styles.premiumPromotion}>
+          <TouchableOpacity style={styles.premiumPromotion} onPress={() => router.push("/unwindPremium")}>
             <Image source={premiumPromotion} style={styles.promotionImage} />
             <View style={styles.premiumPromotionContent}>
               <Text style={styles.h3Black}>Looking to get more features?</Text>
@@ -245,8 +267,8 @@ const styles = StyleSheet.create({
   dangerContent: {
     padding: width * 0.05,
     margin: width * 0.05,
-    paddingTop: height*0.01,
-    marginTop: height*0.01,
+    paddingTop: height * 0.01,
+    marginTop: height * 0.01,
     borderRadius: 15,
     backgroundColor: '#F8F7F3',
     borderColor: '#BBB9B5',

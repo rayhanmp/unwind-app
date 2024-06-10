@@ -5,13 +5,29 @@ import ArticleCard from './components/articleCard';
 import ArticleBanner from './components/articleBanner';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PaperProvider } from 'react-native-paper';
+import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useState } from 'react';
+import { FIREBASE_DB } from '../../firebaseConfig';
 
 export default function Article(){
-    const renderCard = (amount) => {
-      return Array.from({ length : amount}).map((_, index) => (
-        <ArticleCard key={index}/>
-      ));
-    }
+    const [articles, setArticles] = useState([]);
+
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(FIREBASE_DB, "articles"));
+        const fetchedArticles = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setArticles(fetchedArticles);
+      } catch (error) {
+        console.error("Error fetching articles: ", error);
+      }
+    };    
+
+    useEffect(() =>{
+      fetchData(); 
+    },[]); 
 
     return (
       <View style={styles.container}>
@@ -20,7 +36,20 @@ export default function Article(){
           <ArticleBanner />
           <View style={styles.articleContainer}>
             <Text style={{color:"#BBB9B5", fontSize:18, fontWeight:"bold"}}>Learn More!</Text>
-            { renderCard(5) }
+            {articles.map(article => (
+              <ArticleCard
+                key={article.id}
+                title={article.title}
+                imageLink={article.imageLink}
+                content={article.content}
+                authorName={article.authorName}
+                // Accessing date.seconds and date.nanoseconds
+                date={`${article.date.toDate().getDate()}`}
+                month={`${article.date.toDate().getMonth()}`}
+                year={`${article.date.toDate().getFullYear()}`}
+                id={article.id}
+              />
+            ))}
           </View>
         </ScrollView>
         <Navbar/>

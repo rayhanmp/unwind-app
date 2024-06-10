@@ -1,18 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Card, Title, Paragraph, Divider, Button } from 'react-native-paper';
+import { Audio } from 'expo-av';
 import meditationBanner from '../../assets/meditationBanner.png'; // Ensure the path is correct
 import femaleTutorButton from '../../assets/femaleTutorButton.png';
 import maleTutorButton from '../../assets/maleTutorButton.png';
 import ambianceButton from '../../assets/ambianceButton.png';
 import silenceButton from '../../assets/silenceButton.png';
-import { useRouter } from "expo-router";
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const BasicMeditationScreen = () => {
-  const router = useRouter();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { workTime, breakTime, startTime, chosenActivity } = route.params;
+
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [sound, setSound] = useState(null);
+
+  const audioFiles = {
+    maleTutor: require('../../assets/maletutor.mp3'),
+    femaleTutor: require('../../assets/femaletutor.mp3'),
+    ambiance: require('../../assets/ambiance.mp3'),
+    silence: require('../../assets/silence.mp3'),
+  };
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+
+  const playPreview = async (audioOption) => {
+    if (sound) {
+      await sound.unloadAsync();
+    }
+
+    const { sound: newSound } = await Audio.Sound.createAsync(audioFiles[audioOption]);
+    setSound(newSound);
+    setSelectedOption(audioOption);
+
+    newSound.setOnPlaybackStatusUpdate((status) => {
+      if (status.didJustFinish) {
+        newSound.unloadAsync();
+      }
+    });
+
+    await newSound.playAsync();
+    setTimeout(async () => {
+      await newSound.pauseAsync();
+    }, 10000);
+  };
+
+  const navigateToMeditationAudio = () => {
+    navigation.navigate('meditationAudio', { workTime, breakTime, startTime, chosenActivity, audioOption: selectedOption });
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Image source={meditationBanner} style={styles.banner} /> 
+      <Image source={meditationBanner} style={styles.banner} />
       <Card style={styles.card}>
         <Card.Content>
           <Title style={styles.title}>Basic Meditation</Title>
@@ -23,20 +71,51 @@ const BasicMeditationScreen = () => {
           <Divider style={styles.divider} />
           <Paragraph style={styles.subtitle}>Choose how you meditate!</Paragraph>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={() => console.log("clicked")}>
-              <Image source={silenceButton} style={styles.button} />
+            <TouchableOpacity onPress={() => playPreview('silence')}>
+              <Image
+                source={silenceButton}
+                style={[
+                  styles.button,
+                  selectedOption === 'silence' && styles.selectedButton,
+                ]}
+              />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log("clicked")}>
-              <Image source={femaleTutorButton} style={styles.button} />
+            <TouchableOpacity onPress={() => playPreview('femaleTutor')}>
+              <Image
+                source={femaleTutorButton}
+                style={[
+                  styles.button,
+                  selectedOption === 'femaleTutor' && styles.selectedButton,
+                ]}
+              />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log("clicked")}>
-              <Image source={maleTutorButton} style={styles.button} />
+            <TouchableOpacity onPress={() => playPreview('maleTutor')}>
+              <Image
+                source={maleTutorButton}
+                style={[
+                  styles.button,
+                  selectedOption === 'maleTutor' && styles.selectedButton,
+                ]}
+              />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => console.log("clicked")}>
-              <Image source={ambianceButton} style={styles.button} />
+            <TouchableOpacity onPress={() => playPreview('ambiance')}>
+              <Image
+                source={ambianceButton}
+                style={[
+                  styles.button,
+                  selectedOption === 'ambiance' && styles.selectedButton,
+                ]}
+              />
             </TouchableOpacity>
           </View>
-          <Button style={styles.buttonWide} mode="contained" onPress={() => {router.push("/meditationAudio")}}>START</Button> 
+          <Button
+            style={styles.buttonWide}
+            mode="contained"
+            onPress={navigateToMeditationAudio}
+            disabled={!selectedOption}
+          >
+            START
+          </Button>
         </Card.Content>
       </Card>
     </ScrollView>
@@ -69,14 +148,12 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 15,
     fontWeight: 'bold',
+    fontSize: 28,
   },
   minute: {
     fontWeight: 'bold',
   },
   description: {
-    textShadowColor: 'rgba(0, 0, 0, 0.15)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 3,
     fontSize: 15,
     marginTop: 10,
   },
@@ -89,7 +166,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',    
+    flexWrap: 'wrap',
     justifyContent: 'center',
   },
   button: {
@@ -97,6 +174,10 @@ const styles = StyleSheet.create({
     height: 139,
     margin: 5,
     borderRadius: 10,
+  },
+  selectedButton: {
+    borderColor: '#B28BEB',
+    borderWidth: 3,
   },
   buttonWide: {
     marginTop: 10,

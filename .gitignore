@@ -28,6 +28,9 @@ yarn-error.*
 .DS_Store
 *.pem
 
+# firebase
+firebaseConfig.js
+
 # local env files
 .env*.local
 

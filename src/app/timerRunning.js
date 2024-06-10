@@ -3,14 +3,19 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import timerRunningIllust from '../../assets/timerRunningIllust.png';
 import QuitModal from './components/quitModal'; // Adjust the path according to your folder structure
+import { useCallback } from 'react';
 
 const TimerRunning = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { workTime } = route.params;
-  const [secondsLeft, setSecondsLeft] = useState(workTime * 60);
+  const { workTime, breakTime, startTime } = route.params;
+  const [secondsLeft, setSecondsLeft] = useState(workTime);
   const [isRunning, setIsRunning] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const handleNavigation = useCallback(() => {
+    navigation.navigate('timerDone', { workTime, breakTime, startTime });
+  }, [navigation, workTime, breakTime, startTime]);
 
   useEffect(() => {
     let interval = null;
@@ -21,7 +26,7 @@ const TimerRunning = () => {
             return seconds - 1;
           } else {
             clearInterval(interval);
-            navigation.navigate('timerDone'); // Navigate to the TimerDone screen
+            handleNavigation();
             return 0;
           }
         });
