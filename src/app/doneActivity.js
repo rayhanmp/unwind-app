@@ -24,7 +24,7 @@ const ReflectionScreen = () => {
   const activityImages = {
     walking: WalkingImage,
     meditation: MeditationImage,
-    journal: JournalingImage,
+    journaling: JournalingImage,
   };
 
   const handleFinish = async () => {

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 const TimerSetupScreen = () => {
   const navigation = useNavigation();
   const [workTime, setWorkTime] = useState(10); // time in seconds
-  const [breakTime, setBreakTime] = useState(10); // time in seconds (10 minutes)
+  const [breakTime, setBreakTime] = useState(60); // time in seconds
 
   const decreaseTime = (type) => {
     if (type === 'work') {
