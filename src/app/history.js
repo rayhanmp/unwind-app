@@ -215,7 +215,7 @@ const HistoryScreen = () => {
     };
 
     switch (activity.activityType) {
-      case 'journal':
+      case 'journaling':
         const wordCount = activity.journalContent ? activity.journalContent.split(' ').length : 0;
         return (
           <>
