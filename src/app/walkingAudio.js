@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 export default function WalkingAudio() {
   const route = useRoute();
   const navigation = useNavigation();
-  const { workTime, breakTime, startTime, chosenActivity } = route.params;
+  const { workTime, breakTime, startTime, chosenActivity, audioOption } = route.params;
 
   const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -18,10 +18,17 @@ export default function WalkingAudio() {
   const [duration, setDuration] = useState(0);
   const timerRef = useRef(null);
 
+  const audioFiles = {
+    silence: require('../../assets/silence.mp3'),
+    energetic: require('../../assets/energetic.mp3'),
+    calm: require('../../assets/bymyside.mp3'),
+    ambiance: require('../../assets/ambiance.mp3'),
+  };
+
   useEffect(() => {
     async function loadSound() {
       console.log('Loading Sound');
-      const { sound } = await Audio.Sound.createAsync(require('../../assets/bymyside.mp3'));
+      const { sound } = await Audio.Sound.createAsync(audioFiles[audioOption]);
       setSound(sound);
       
       sound.setOnPlaybackStatusUpdate(updatePlaybackStatus);
@@ -35,7 +42,7 @@ export default function WalkingAudio() {
         sound.unloadAsync();
       }
     };
-  }, []);
+  }, [audioOption]);
 
   const updatePlaybackStatus = (status) => {
     if (status.isLoaded) {
