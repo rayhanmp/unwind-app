@@ -28,18 +28,15 @@ yarn-error.*
 .DS_Store
 *.pem
 
+# firebase
+firebaseConfig.js
+
 # local env files
 .env*.local
 
 # typescript
 *.tsbuildinfo
 
-#firebase
-firebaseConfig.js
-
 # IDEs
 .idea/
 .vscode/
-
-#firebase
-firebaseConfig.js
