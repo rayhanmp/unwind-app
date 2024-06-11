@@ -79,7 +79,7 @@ export default function Login() {
             />
             <Button mode="contained" onPress={handleLogin} style={styles.button}>LOGIN</Button>
 
-            <Link href="/login" style={{textAlign: 'center', marginTop: 40, color: '#BBB9B5', fontSize:14}}>DON’T HAVE AN ACCOUNT? SIGN UP</Link>
+            <Link href="/register" style={{textAlign: 'center', marginTop: 40, color: '#BBB9B5', fontSize:14}}>DON’T HAVE AN ACCOUNT? SIGN UP</Link>
             <StatusBar style="auto" />
           </View>
       </View>

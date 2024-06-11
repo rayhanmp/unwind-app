@@ -11,13 +11,19 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
   SplashScreen.preventAutoHideAsync();
   setTimeout(SplashScreen.hideAsync, 3000);
 
   const auth = FIREBASE_AUTH;
-  
+
   const signUp = async () => {
+    if (password !== confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       console.log(user);
@@ -31,35 +37,35 @@ export default function Register() {
 
   return (
     <KeyboardAvoidingView
-    style={styles.container}
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image source={registerBanner} style={styles.logo}/>
-      <View style={styles.contentContainer}>
-      <Text style={styles.title}>Hello!</Text>
-      <Text style={styles.subtitle}>Register to get started!</Text>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Email"
-        onChangeText={newEmail => setEmail(newEmail)}
-        defaultValue={email}/>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Password"
-        onChangeText={newPassword => setPassword(newPassword)}
-        defaultValue={password}
-        secureTextEntry={true}/>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Confirm Password"
-        onChangeText={newPassword => setPassword(newPassword)}
-        defaultValue={password}
-        secureTextEntry={true}/>
-      <Button mode="contained" style={styles.button} onPress={signUp}> SIGN UP </Button>
-      <Link href="/login" style={{textAlign: 'center', marginTop: 40, color: '#BBB9B5', fontSize:14}}>ALREADY HAVE AN ACCOUNT? LOG IN</Link>
-      <StatusBar style="auto" />
-      </View>
-    </ScrollView>
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Image source={registerBanner} style={styles.logo}/>
+        <View style={styles.contentContainer}>
+          <Text style={styles.title}>Hello!</Text>
+          <Text style={styles.subtitle}>Register to get started!</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Email"
+            onChangeText={newEmail => setEmail(newEmail)}
+            defaultValue={email}/>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Password"
+            onChangeText={newPassword => setPassword(newPassword)}
+            defaultValue={password}
+            secureTextEntry={true}/>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Confirm Password"
+            onChangeText={newConfirmPassword => setConfirmPassword(newConfirmPassword)}
+            defaultValue={confirmPassword}
+            secureTextEntry={true}/>
+          <Button mode="contained" style={styles.button} onPress={signUp}> SIGN UP </Button>
+          <Link href="/login" style={{textAlign: 'center', marginTop: 40, color: '#BBB9B5', fontSize:14}}>ALREADY HAVE AN ACCOUNT? LOG IN</Link>
+          <StatusBar style="auto" />
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }

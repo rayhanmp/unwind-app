@@ -7,13 +7,12 @@ import StarIcon from '../../assets/starIcon.png';
 import { Ionicons } from '@expo/vector-icons'; 
 
 const PIXEL3A_WIDTH = 394;
-const PIXEL3A_HEIGHT = 740;
+
 const { width, height } = Dimensions.get('window');
 const scaleFont = (size) => (width / PIXEL3A_WIDTH) * size;
 
 const Header = () => {
     const navigation = useNavigation();
-    
     return (
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.navigate('settings')}>
@@ -25,11 +24,10 @@ const Header = () => {
   };
 
 const PremiumSubscriptionScreen = () => {
-  const navigation = useNavigation();
 
   return (
     <ImageBackground source={PremiumBackground} style={styles.background}>
-        <Header />
+      <Header />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Unwind Premium</Text>

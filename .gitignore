@@ -29,7 +29,7 @@ yarn-error.*
 *.pem
 
 # firebase
-firebaseConfig.js
+# firebaseConfig.js
 
 # local env files
 .env*.local

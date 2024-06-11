@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { ScrollView, View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground, TextInput, Dimensions, Alert } from 'react-native';
 import { Button, Modal, Portal, Provider as PaperProvider, Title } from 'react-native-paper';
 import Navbar from './components/navbar';
@@ -8,6 +9,8 @@ import workSessionRecord from "../../assets/workSessionRecord.png";
 import wordWrittenJournalRecord from "../../assets/wordWrittenJournalRecord.png";
 import walkingSessionRecord from "../../assets/walkingSessionRecord.png";
 import meditationSessionRecord from "../../assets/meditationSessionRecord.png";
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 import { useRouter } from 'expo-router';
 import { getAuth, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 
@@ -94,26 +97,73 @@ const Section = ({ title, children }) => (
   </View>
 );
 
-const Records = () => (
-  <View style={styles.recordContainer}>
-    <Text style={styles.h2}>My Records</Text>
-    <View style={styles.recordButtonContainer}>
-      {[
-        { source: workSessionRecord, count: 3, text: "Recorded work sessions" },
-        { source: wordWrittenJournalRecord, count: 1073, text: "Words written in journals" },
-        { source: meditationSessionRecord, count: 1, text: "Recorded meditation sessions" },
-        { source: walkingSessionRecord, count: 2, text: "Recorded walking sessions" }
-      ].map((record, index) => (
-        <TouchableOpacity key={index}>
-          <ImageBackground source={record.source} style={styles.recordButton}>
-            <Text style={styles.h3Black}>{record.count}</Text>
-            <Text style={styles.recordText}>{record.text}</Text>
-          </ImageBackground>
-        </TouchableOpacity>
-      ))}
+const Records = () => {
+  const [recordCounts, setRecordCounts] = useState({
+    workSessionCount: 0,
+    wordWrittenCount: 0,
+    meditationSessionCount: 0,
+    walkingSessionCount: 0
+  });
+
+  useEffect(() => {
+    const fetchRecords = async () => {
+      const workSessionRef = collection(FIREBASE_DB, 'workSession');
+      const querySnapshot = await getDocs(workSessionRef);
+      let workSessionCount = 0;
+      let wordWrittenCount = 0;
+      let meditationSessionCount = 0;
+      let walkingSessionCount = 0;
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        workSessionCount++;
+
+        if (data.activityType === 'journaling') {
+          const words = data.journalContent ? data.journalContent.split(' ').length : 0;
+          wordWrittenCount += words;
+        }
+
+        if (data.activityType === 'meditation') {
+          meditationSessionCount++;
+        }
+
+        if (data.activityType === 'walking') {
+          walkingSessionCount++;
+        }
+      });
+
+      setRecordCounts({
+        workSessionCount,
+        wordWrittenCount,
+        meditationSessionCount,
+        walkingSessionCount
+      });
+    };
+
+    fetchRecords();
+  }, []);
+
+  return (
+    <View style={styles.recordContainer}>
+      <Text style={styles.h2}>My Records</Text>
+      <View style={styles.recordButtonContainer}>
+        {[
+          { source: workSessionRecord, count: recordCounts.workSessionCount, text: 'Recorded work sessions' },
+          { source: wordWrittenJournalRecord, count: recordCounts.wordWrittenCount, text: 'Words written in journals' },
+          { source: meditationSessionRecord, count: recordCounts.meditationSessionCount, text: 'Recorded meditation sessions' },
+          { source: walkingSessionRecord, count: recordCounts.walkingSessionCount, text: 'Recorded walking sessions' }
+        ].map((record, index) => (
+          <TouchableOpacity key={index}>
+            <ImageBackground source={record.source} style={styles.recordButton}>
+              <Text style={styles.h3Black}>{record.count}</Text>
+              <Text style={styles.recordText}>{record.text}</Text>
+            </ImageBackground>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 const DangerZone = () => {
   const auth = getAuth();
@@ -122,7 +172,7 @@ const DangerZone = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push('/login');
+      router.push('/');
     } catch (error) {
       Alert.alert('Logout Failed', 'Failed to logout. Please try again later.');
       console.error(error);
