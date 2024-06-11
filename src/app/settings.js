@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground, TextInput, Dimensions, Alert } from 'react-native'; 
+import { ScrollView, View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground, TextInput, Dimensions, Alert } from 'react-native';
 import { Button, Modal, Portal, Provider as PaperProvider, Title } from 'react-native-paper';
 import Navbar from './components/navbar';
 import premiumPromotion from "../../assets/premiumPromotion.png";
@@ -9,28 +9,76 @@ import wordWrittenJournalRecord from "../../assets/wordWrittenJournalRecord.png"
 import walkingSessionRecord from "../../assets/walkingSessionRecord.png";
 import meditationSessionRecord from "../../assets/meditationSessionRecord.png";
 import { useRouter } from 'expo-router';
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
 
 const PIXEL3A_WIDTH = 393;
-const PIXEL3A_HEIGHT = 740;
 
 const { width, height } = Dimensions.get('window');
 
 const scaleFont = (size) => (width / PIXEL3A_WIDTH) * size;
 
-const ModalContent = ({ visible, hideModal }) => (
-  <Portal>
-    <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
-      <Text style={styles.modalTitle}>Change Login Information</Text>
-      <TextInput placeholder="Username" style={styles.modalTextInput} />
-      <TextInput placeholder="Old Password" style={styles.modalTextInput} />
-      <TextInput placeholder="New Password" style={styles.modalTextInput} />
-      <TextInput placeholder="Confirm New Password" style={styles.modalTextInput} />
-      <Button style={styles.buttonWideRegular} mode="contained" onPress={hideModal}>CONFIRM</Button>
-      <Button style={styles.buttonWideOutlineRegular} mode="contained" onPress={hideModal}><Text style={{ color: '#B28BEB' }}>CANCEL</Text></Button>
-    </Modal>
-  </Portal>
-);
+const ModalContent = ({ visible, hideModal }) => {
+  const [oldPassword, setOldPassword] = React.useState('');
+  const [newPassword, setNewPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+
+  const handleChangePassword = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (newPassword !== confirmPassword) {
+      Alert.alert('Error', 'New passwords do not match.');
+      return;
+    }
+
+    if (user) {
+      const credential = EmailAuthProvider.credential(user.email, oldPassword);
+      try {
+        await reauthenticateWithCredential(user, credential);
+        await updatePassword(user, newPassword);
+        Alert.alert('Success', 'Password updated successfully.');
+        hideModal();
+      } catch (error) {
+        Alert.alert('Error', error.message);
+      }
+    } else {
+      Alert.alert('Error', 'No user is signed in.');
+    }
+  };
+
+  return (
+    <Portal>
+      <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
+        <Text style={styles.modalTitle}>Change Login Information</Text>
+        <TextInput 
+          placeholder="Old Password"
+          style={styles.modalTextInput}
+          secureTextEntry
+          value={oldPassword}
+          onChangeText={setOldPassword}
+        />
+        <TextInput 
+          placeholder="New Password"
+          style={styles.modalTextInput}
+          secureTextEntry
+          value={newPassword}
+          onChangeText={setNewPassword}
+        />
+        <TextInput 
+          placeholder="Confirm New Password"
+          style={styles.modalTextInput}
+          secureTextEntry
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+        <Button style={styles.buttonWideRegular} mode="contained" onPress={handleChangePassword}>CONFIRM</Button>
+        <Button style={styles.buttonWideOutlineRegular} mode="contained" onPress={hideModal}>
+          <Text style={{ color: '#B28BEB' }}>CANCEL</Text>
+        </Button>
+      </Modal>
+    </Portal>
+  );
+};
 
 const Header = () => (
   <View style={styles.header}>
@@ -81,7 +129,6 @@ const DangerZone = () => {
   };
 
   const handleDeleteAccount = () => {
-    // Add your delete account logic here
     console.log('Delete account clicked');
   };
 
@@ -100,6 +147,16 @@ const DangerZone = () => {
 
 export default function Setting() {
   const [visible, setVisible] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+
+  React.useEffect(() => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      setEmail(user.email);
+    }
+  }, []);
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -116,8 +173,8 @@ export default function Setting() {
             </TouchableOpacity>
           </Section>
           <View style={styles.loginInformation}>
-            <Text style={styles.h3}>Username</Text>
-            <Text style={styles.loginContent}>Void</Text>
+            <Text style={styles.h3}>Email</Text>
+            <Text style={styles.loginContent}>{email}</Text>
             <Text style={styles.h3}>Password</Text>
             <Text style={styles.loginContent}>************</Text>
           </View>
